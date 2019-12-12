@@ -35,30 +35,35 @@ public class Arquivo_txt {
                String data_lavr_certidao_obito = strLine.substring(21, 29);
                String benef_inss_n = strLine.substring(29, 39);
                String nome_falecido = strLine.substring(39, 115);
+               String nome_falecido_ajustado = nome_falecido.trim();
                String nome_mae_falecido = strLine.substring(115,147);
+               String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
+                       
                String data_Nascimento = strLine.substring(147, 155);
                String data_Obito = strLine.substring(155, 163);
                String cpf = strLine.substring(163, 174);
                String nit = strLine.substring(174, 185);
                String tipo_identifica_cartorio = strLine.substring(185, 186);
                String Id_cartorio = strLine.substring(186, 210);
-
+              String Id_cartorio_ajustado = Id_cartorio.trim() ;
         
                    String line = "";
                  line =  line +  livro_n + ";" + folha_n + ";" + termo_obito_n + ";"
                 + data_lavr_certidao_obito + ";" + benef_inss_n + ";"
-                + nome_falecido + ";" + nome_mae_falecido + ";"
+                + nome_falecido_ajustado + ";" + nome_mae_falecido_ajustado + ";"
                 + data_Nascimento + ";"
                 + data_Obito + ";" 
                 + cpf + ";" + nit + ";" 
                 + tipo_identifica_cartorio + ";"
-                + Id_cartorio + ";";
-               
+                + Id_cartorio_ajustado + ";";
+             
                  
               texto.add(line);  
+              
 
                 
-            }            
+            } 
+            
    return texto;
         }
      
