@@ -18,7 +18,8 @@ public class Principal {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Arquivo_txt arquivo = new Arquivo_txt();
-        arquivo.conteudo_arquivo_csv_sisob();
+        //arquivo.conteudo_arquivo_csv_sisob();
+        arquivo.salvar_arquivo();
     }
     
 }

@@ -6,12 +6,16 @@
 package com.claytonpereira.model;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -75,5 +79,31 @@ public class Arquivo_txt {
          System.out.print(conteudo.get(i) + "\n");
          i++;
     }}
+    
+    public void salvar_arquivo() throws IOException{
+    
+     String data = "Test data";
+     Vector conteudo = abrir_ler_arquivo();
+       int i = 0 ;
+       FileOutputStream out = new FileOutputStream("src/testFile2.csv");
+     
+   
+           JOptionPane alert = new JOptionPane();
+          alert.setVisible(true);
+           System.out.println("já existe arquivo com esse nome !");;
+
+       while(i < conteudo.size()){
+        data = conteudo.get(i).toString() + "\n";
+       out.write(data.getBytes());
+           System.out.println("linha = " + i);
+        i++;
+           
+       }
+       
  
-}
+
+ 
+
+out.close();
+ 
+}}
