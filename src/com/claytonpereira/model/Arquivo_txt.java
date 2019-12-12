@@ -11,9 +11,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 
@@ -32,7 +36,7 @@ public class Arquivo_txt {
             String strLine;
               
             while ((strLine = leitor.readLine()) != null) {
-                  
+                 
                String livro_n =  strLine.substring(0, 6);
                String folha_n = strLine.substring(6, 11);
                String termo_obito_n = strLine.substring(11, 21);
@@ -49,7 +53,7 @@ public class Arquivo_txt {
                String nit = strLine.substring(174, 185);
                String tipo_identifica_cartorio = strLine.substring(185, 186);
                String Id_cartorio = strLine.substring(186, 210);
-              String Id_cartorio_ajustado = Id_cartorio.trim() ;
+               String Id_cartorio_ajustado = Id_cartorio.trim();
         
                    String line = "";
                  line =  line +  livro_n + ";" + folha_n + ";" + termo_obito_n + ";"
@@ -100,10 +104,127 @@ public class Arquivo_txt {
            
        }
        
+ out.close();
  
+}
+ public void export_csv_to_db(String csvFilePath) throws FileNotFoundException, SQLException, IOException{
+     
+ String sql = "INSERT INTO registros_sisob (" +
+     "livro_num," +
+	"folha_num," +
+	"termo_num," +
+     "data_lavratura," +
+     "beneficio_num," + 
+     "nome_falecido," + 
+     "nome_mae," +
+      "DN_SISOBI," +
+      "DO_SISOBI," +
+          "cpf," +
+     " NIT," + 
+	"  Tipo_id_cartorio," +
+	  "cartorio_id," +
+           "DN_SISOBI_Ajustada,"+    
+      "ANO_OBITO," +
+     " MES_OBITO,"  +
+      "DO_SISOBI_Ajustada," +
+     " Nome_Arquivo_Importado) VALUES ("
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?,"
+        + "?)";
+ DatabaseConnectionMysql con_db = new DatabaseConnectionMysql();
+ Connection  conexao =  con_db.database_connection();
+  
+  
+   PreparedStatement statement = conexao.prepareStatement(sql);
+   
+ 
+            BufferedReader lineReader = new BufferedReader(new FileReader("C:\\Users\\claytonpereira\\Documents\\GitHub\\SISOBI2\\src\\com\\claytonpereira\\model\\OBI201901.txt"));
+            String lineText = null;
+ 
+            int count = 0;
+ 
+           // lineReader.readLine(); // skip header line
+ 
+            while ((lineText = lineReader.readLine()) != null) {
+                String livro_n =  lineText.substring(0, 6);
+               String folha_n = lineText.substring(6, 11);
+               String termo_obito_n = lineText.substring(11, 21);
+               String data_lavr_certidao_obito = lineText.substring(21, 29);
+               String benef_inss_n = lineText.substring(29, 39);
+               String nome_falecido = lineText.substring(39, 115);
+               String nome_falecido_ajustado = nome_falecido.trim();
+               String nome_mae_falecido = lineText.substring(115,147);
+               String nome_mae_falecido_ajustado = nome_mae_falecido.trim();                       
+               String data_Nascimento = lineText.substring(147, 155);
+               String data_Obito = lineText.substring(155, 163);
+               String cpf = lineText.substring(163, 174);
+               String nit = lineText.substring(174, 185);
+               String tipo_identifica_cartorio = lineText.substring(185, 186);
+               String Id_cartorio = lineText.substring(186, 210);
+               String Id_cartorio_ajustado = Id_cartorio.trim();
+               
+               String DN_SISOBI_Ajustada = lineText.substring(147, 155);
+               String ANO_OBITO = "2019";
+               String MES_OBITO = "01";
+               String DO_SISOBI_Ajustada = lineText.substring(155, 163);
+               String Nome_Arquivo_Importado = "arquivotext.csv";
+ 
+                statement.setString(1, livro_n);
+                statement.setString(2, folha_n);
+                statement.setString(3, termo_obito_n);
+                statement.setString(4, data_lavr_certidao_obito);
+                 statement.setString(5, benef_inss_n);
+                statement.setString(6, nome_falecido_ajustado);
+                statement.setString(7, nome_mae_falecido_ajustado);
+                statement.setString(8, data_Nascimento);
+                 statement.setString(9, data_Obito);
+                statement.setString(10, cpf);
+                statement.setString(11, nit);
+                statement.setString(12, tipo_identifica_cartorio);
+                 statement.setString(13, Id_cartorio_ajustado);
+                 
+              
+                 statement.setString(14, DN_SISOBI_Ajustada);
+                statement.setString(15, ANO_OBITO);
+                statement.setString(16, MES_OBITO);
+                 statement.setString(17, DO_SISOBI_Ajustada);
+                statement.setString(18, Nome_Arquivo_Importado);
+ 
+                statement.addBatch();
+     int batchSize=20;
+ 
+                if (count % batchSize == 0) {
+                    statement.executeBatch();
+                }
+            }
+ 
+            lineReader.close();
+ 
+            // execute the remaining queries
+            statement.executeBatch();
+ 
+            conexao.commit();
+            conexao.close();
+ 
+      
+ 
+ 
+ 
+ }
 
- 
-
-out.close();
- 
-}}
+}
