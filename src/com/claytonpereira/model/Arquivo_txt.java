@@ -19,7 +19,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -28,10 +31,10 @@ import javax.swing.JOptionPane;
 public class Arquivo_txt {
    
     
-    public Vector abrir_ler_arquivo() throws FileNotFoundException, IOException{
+    public Vector abrir_ler_arquivo_txt(File arquivo) throws FileNotFoundException, IOException,StringIndexOutOfBoundsException{
           Vector texto = new Vector(8,3); 
         try ( 
-             FileInputStream fstream = new FileInputStream("C:\\Users\\claytonpereira\\Documents\\GitHub\\SISOBI2\\src\\com\\claytonpereira\\model\\OBI201901.txt")) {
+             FileInputStream fstream = new FileInputStream(arquivo)) {
             BufferedReader leitor = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
               
@@ -53,7 +56,7 @@ public class Arquivo_txt {
                String nit = strLine.substring(174, 185);
                String tipo_identifica_cartorio = strLine.substring(185, 186);
                String Id_cartorio = strLine.substring(186, 210);
-               String Id_cartorio_ajustado = Id_cartorio.trim();
+              
         
                    String line = "";
                  line =  line +  livro_n + ";" + folha_n + ";" + termo_obito_n + ";"
@@ -63,9 +66,9 @@ public class Arquivo_txt {
                 + data_Obito + ";" 
                 + cpf + ";" + nit + ";" 
                 + tipo_identifica_cartorio + ";"
-                + Id_cartorio_ajustado + ";";
+                + Id_cartorio+ ";";
              
-                 
+                 System.out.println(line);
               texto.add(line);  
               
 
@@ -76,38 +79,63 @@ public class Arquivo_txt {
         }
      
 }
-    public void conteudo_arquivo_csv_sisob() throws IOException{
-       Vector conteudo = abrir_ler_arquivo();
+    public void conteudo_arquivo_csv_sisob(File arquivo) throws IOException{
+       Vector conteudo = abrir_ler_arquivo_txt(arquivo);
        int i = 0 ;
        while(i < conteudo.size()){
          System.out.print(conteudo.get(i) + "\n");
          i++;
     }}
     
-    public void salvar_arquivo() throws IOException{
+    public void salvar_arquivo_txt_to_csv(File arquivo, String title) throws IOException{
     
      String data = "Test data";
-     Vector conteudo = abrir_ler_arquivo();
+     Vector conteudo = abrir_ler_arquivo_txt(arquivo);
        int i = 0 ;
-       FileOutputStream out = new FileOutputStream("src/testFile2.csv");
-     
-   
-           JOptionPane alert = new JOptionPane();
-          alert.setVisible(true);
-           System.out.println("já existe arquivo com esse nome !");;
+       
+          JFileChooser chooser = new JFileChooser();
+       //chooser.setCurrentDirectory(new java.io.File("."));
+       chooser.setDialogTitle(title);
+      
+       int CHECK = chooser.showSaveDialog(chooser); 
+       
+       chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+       FileFilter filter = new FileNameExtensionFilter("Arquivo CSV", "csv");
+        chooser.addChoosableFileFilter(filter);  
+        chooser.setAcceptAllFileFilterUsed(false);
+           
+            if((CHECK == JFileChooser.CANCEL_OPTION))
+            {
+                System.out.println("Não selecionou nenhum arquivo");
+            JOptionPane.showMessageDialog(null,"Nenhum arquivo selecionado!");
+
+            
+            }  if((CHECK == JFileChooser.APPROVE_OPTION))
+            {  // chooser.showSaveDialog(chooser);
+                System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName() );     
+
+                FileOutputStream out =   new FileOutputStream( chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName());
 
        while(i < conteudo.size()){
+           
         data = conteudo.get(i).toString() + "\n";
        out.write(data.getBytes());
            System.out.println("linha = " + i);
         i++;
            
-       }
-       
- out.close();
+       } 
+     
+     
+      
+      out.close();
+               
+        }
+                
+         
+ 
  
 }
- public void export_csv_to_db(String csvFilePath) throws FileNotFoundException, SQLException, IOException{
+ public void export_csv_to_db(File arquivo) throws FileNotFoundException, SQLException, IOException{
      
  String sql = "INSERT INTO registros_sisob (" +
      "livro_num," +
@@ -153,7 +181,7 @@ public class Arquivo_txt {
    PreparedStatement statement = conexao.prepareStatement(sql);
    
  
-            BufferedReader lineReader = new BufferedReader(new FileReader("C:\\Users\\claytonpereira\\Documents\\GitHub\\SISOBI2\\src\\com\\claytonpereira\\model\\OBI201901.txt"));
+            BufferedReader lineReader = new BufferedReader(new FileReader(arquivo));
             String lineText = null;
  
             int count = 0;
@@ -161,6 +189,9 @@ public class Arquivo_txt {
            // lineReader.readLine(); // skip header line
  
             while ((lineText = lineReader.readLine()) != null) {
+                
+                //String livro_n = lineText.split(";");
+                
                 String livro_n =  lineText.substring(0, 6);
                String folha_n = lineText.substring(6, 11);
                String termo_obito_n = lineText.substring(11, 21);
