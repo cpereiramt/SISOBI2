@@ -46,22 +46,22 @@ public class Arquivo_txt {
                String data_lavr_certidao_obito = strLine.substring(21, 29);
                String benef_inss_n = strLine.substring(29, 39);
                String nome_falecido = strLine.substring(39, 115);
-               String nome_falecido_ajustado = nome_falecido.trim();
+              // String nome_falecido_ajustado = nome_falecido.trim();
                String nome_mae_falecido = strLine.substring(115,147);
-               String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
+              // String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
                        
                String data_Nascimento = strLine.substring(147, 155);
                String data_Obito = strLine.substring(155, 163);
                String cpf = strLine.substring(163, 174);
                String nit = strLine.substring(174, 185);
                String tipo_identifica_cartorio = strLine.substring(185, 186);
-               String Id_cartorio = strLine.substring(186, 210);
+               String Id_cartorio = strLine.substring(186, 200);
               
         
                    String line = "";
                  line =  line +  livro_n + ";" + folha_n + ";" + termo_obito_n + ";"
                 + data_lavr_certidao_obito + ";" + benef_inss_n + ";"
-                + nome_falecido_ajustado + ";" + nome_mae_falecido_ajustado + ";"
+                + nome_falecido + ";" + nome_mae_falecido + ";"
                 + data_Nascimento + ";"
                 + data_Obito + ";" 
                 + cpf + ";" + nit + ";" 
@@ -112,6 +112,7 @@ public class Arquivo_txt {
             
             }  if((CHECK == JFileChooser.APPROVE_OPTION))
             {  // chooser.showSaveDialog(chooser);
+                
                 System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName() );     
 
                 FileOutputStream out =   new FileOutputStream( chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName());
@@ -193,41 +194,69 @@ public class Arquivo_txt {
                 //String livro_n = lineText.split(";");
                 
                 String livro_n =  lineText.substring(0, 6);
-               String folha_n = lineText.substring(6, 11);
-               String termo_obito_n = lineText.substring(11, 21);
-               String data_lavr_certidao_obito = lineText.substring(21, 29);
-               String benef_inss_n = lineText.substring(29, 39);
-               String nome_falecido = lineText.substring(39, 115);
-               String nome_falecido_ajustado = nome_falecido.trim();
-               String nome_mae_falecido = lineText.substring(115,147);
-               String nome_mae_falecido_ajustado = nome_mae_falecido.trim();                       
-               String data_Nascimento = lineText.substring(147, 155);
-               String data_Obito = lineText.substring(155, 163);
-               String cpf = lineText.substring(163, 174);
-               String nit = lineText.substring(174, 185);
-               String tipo_identifica_cartorio = lineText.substring(185, 186);
-               String Id_cartorio = lineText.substring(186, 210);
+               String folha_n = lineText.substring(7, 12);
+               String termo_obito_n = lineText.substring(13, 23);
+               
+               String data_lavr_certidao_obito = lineText.substring(24, 32);
+               
+               String benef_inss_n = lineText.substring(33, 43);
+               
+               String nome_falecido = lineText.substring(44, 115);
+               //String nome_falecido_ajustado = nome_falecido.trim();
+               
+               String nome_mae_falecido = lineText.substring(121,153);
+               //String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
+               
+               String data_Nascimento = lineText.substring(154, 162);
+               
+               String data_Obito = lineText.substring(163, 171);
+               
+               String cpf = lineText.substring(172, 183);
+               String nit = lineText.substring(185, 195);
+               
+               String tipo_identifica_cartorio = lineText.substring(196, 197);
+               String Id_cartorio = lineText.substring(198, 212);
                String Id_cartorio_ajustado = Id_cartorio.trim();
                
-               String DN_SISOBI_Ajustada = lineText.substring(147, 155);
+               
+                System.out.println(
+               " Resultado para o banco de dados !" + "\n" +      
+                 livro_n + "\n"    
+               + folha_n + "\n"
+               + termo_obito_n + "\n"
+               + data_lavr_certidao_obito + "\n"
+               +  benef_inss_n + "\n"
+              +  nome_falecido + "\n"
+              +// nome_falecido_ajustado + "\n"
+                 nome_mae_falecido + "\n"
+              + //nome_mae_falecido_ajustado    + "\n"                 
+                data_Nascimento + "\n"
+               + data_Obito + "\n"
+               + cpf + "\n"
+               + nit + "\n"
+               + tipo_identifica_cartorio + "\n"
+               + Id_cartorio + "\n"
+                        + Id_cartorio_ajustado);
+               
+               String DN_SISOBI_Ajustada = lineText.substring(154, 162);
                String ANO_OBITO = "2019";
                String MES_OBITO = "01";
-               String DO_SISOBI_Ajustada = lineText.substring(155, 163);
-               String Nome_Arquivo_Importado = "arquivotext.csv";
+               String DO_SISOBI_Ajustada = lineText.substring(163, 171);
+               String Nome_Arquivo_Importado = "arquivotext2.csv";
  
                 statement.setString(1, livro_n);
                 statement.setString(2, folha_n);
                 statement.setString(3, termo_obito_n);
                 statement.setString(4, data_lavr_certidao_obito);
                  statement.setString(5, benef_inss_n);
-                statement.setString(6, nome_falecido_ajustado);
-                statement.setString(7, nome_mae_falecido_ajustado);
+                statement.setString(6, nome_falecido);
+                statement.setString(7, nome_mae_falecido);
                 statement.setString(8, data_Nascimento);
                  statement.setString(9, data_Obito);
                 statement.setString(10, cpf);
                 statement.setString(11, nit);
                 statement.setString(12, tipo_identifica_cartorio);
-                 statement.setString(13, Id_cartorio_ajustado);
+                 statement.setString(13, Id_cartorio);
                  
               
                  statement.setString(14, DN_SISOBI_Ajustada);
