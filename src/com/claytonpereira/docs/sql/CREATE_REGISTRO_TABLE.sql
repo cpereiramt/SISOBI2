@@ -19,7 +19,7 @@ CREATE TABLE registros_sisob (
       MES_OBITO INT(2),
       DO_SISOBI_Ajustada VARCHAR(10),
       Nome_Arquivo_Importado VARCHAR(255),
-      PRIMARY KEY (nome_falecido,nome_mae,MES_OBITO)
+      PRIMARY KEY (livro_num,nome_falecido,nome_mae,MES_OBITO)
 );
 
 
