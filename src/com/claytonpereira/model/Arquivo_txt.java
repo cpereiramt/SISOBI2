@@ -36,7 +36,7 @@ public class Arquivo_txt {
     public Vector abrir_ler_arquivo_txt(File arquivo, JTextArea mensagem) throws FileNotFoundException, IOException,StringIndexOutOfBoundsException{
           Vector texto = new Vector(8,3); 
           
-          mensagem.setText("Arquivo TXT selecionado : " + arquivo.getName() +  "..." + "\n" );
+          mensagem.setText("Arquivo TXT selecionado : " + arquivo.getName() +  "..." + "\n" + "\n" );
           mensagem.setEditable(false);
           mensagem.setVisible(true);
          
@@ -131,10 +131,12 @@ public class Arquivo_txt {
                 System.out.print("arquivo escolhido processado " +  arquivo_csv_ajustado + "\n" );
                 FileOutputStream out =   new FileOutputStream( chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
                 System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" );     
-
+                
+                mensagem.append("Convertendo ........." + "\n" + "\n");
        while(i < conteudo.size()){ 
-
+         
         data = conteudo.get(i).toString() + "\n";
+        mensagem.append("Linha = " + i + "  | "+ data );
        out.write(data.getBytes());
            System.out.println("linha = " + i);
         i++;
@@ -142,8 +144,7 @@ public class Arquivo_txt {
        } 
      
      
-       mensagem.append("Arquivo TXT convertido para csv "
-               + "\n" + "e salvo em : " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" + "..." + "\n");
+       mensagem.append("\n"+"Arquivo TXT convertido para csv e salvo em : " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" + "..." + "\n");
           mensagem.setVisible(true);
       out.close();
                
@@ -154,9 +155,18 @@ public class Arquivo_txt {
  
 }
  public void export_csv_to_db(File arquivo, JTextArea mensagem) throws FileNotFoundException, SQLException, IOException{
-     mensagem.repaint();
-     mensagem.setVisible(true);         
-     mensagem.setText("Importando o arquivo para o banco de dados ! ... " + "\n");
+     
+     
+               mensagem.repaint();
+               mensagem.setVisible(true);         
+               mensagem.setText("Importando o arquivo para o banco de dados ! ... " + "\n" + "\n");
+              
+       
+
+
+    
+     
+     
     
   
  String sql = "INSERT INTO registros_sisob (" +
@@ -209,39 +219,61 @@ public class Arquivo_txt {
             String lineText = null;
  
             int count = 0;
+            int registro = 1;
  
            // lineReader.readLine(); // skip header line
- 
+            mensagem.append("\n"+"Inserindo registros no banco !");
             while ((lineText = lineReader.readLine()) != null) {
-                
+                mensagem.append("\n"+"=============================================================================================================" + "\n");
                 //String livro_n = lineText.split(";");
                
              
                 String livro_n =  lineText.substring(0, 6);
                String folha_n = lineText.substring(7, 12);
-               String termo_obito_n = lineText.substring(13, 23);
-               
-               String data_lavr_certidao_obito = lineText.substring(24, 32);
-               
-               String benef_inss_n = lineText.substring(33, 43);
-               
+               String termo_obito_n = lineText.substring(13, 23);               
+               String data_lavr_certidao_obito = lineText.substring(24, 32);               
+               String benef_inss_n = lineText.substring(33, 43);               
                String nome_falecido = lineText.substring(44, 115);
-               //String nome_falecido_ajustado = nome_falecido.trim();
-               
+               //String nome_falecido_ajustado = nome_falecido.trim();               
                String nome_mae_falecido = lineText.substring(121,153);
-               //String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
-               
-               String data_Nascimento = lineText.substring(154, 162);
-               
-               String data_Obito = lineText.substring(163, 171);
-               
+               //String nome_mae_falecido_ajustado = nome_mae_falecido.trim();               
+               String data_Nascimento = lineText.substring(154, 162);               
+               String data_Obito = lineText.substring(163, 171);               
                String cpf = lineText.substring(172, 183);
-               String nit = lineText.substring(185, 195);
-               
+               String nit = lineText.substring(185, 195);               
                String tipo_identifica_cartorio = lineText.substring(196, 197);
                String Id_cartorio = lineText.substring(198, 212);
-               String Id_cartorio_ajustado = Id_cartorio.trim();
+               String Id_cartorio_ajustado = Id_cartorio.trim();         
+               String DN_SISOBI_Ajustada = lineText.substring(154, 162);
+               String nome_arquivo = arquivo.getName();
+               String ANO_OBITO = nome_arquivo.substring(3,7 );             
+               String MES_OBITO = nome_arquivo.substring(7,9 ) ;
+               String DO_SISOBI_Ajustada = lineText.substring(163, 171);
+               String Nome_Arquivo_Importado = nome_arquivo;
                
+               mensagem.append("\n" + "Registro n º" + registro + "\n" );
+               
+               mensagem.append("" + "\n" +      
+                 livro_n + "\n"    
+               + folha_n + "\n"
+               + termo_obito_n + "\n"
+               + data_lavr_certidao_obito + "\n"
+               +  benef_inss_n + "\n"
+              +  nome_falecido + "\n"
+              +// nome_falecido_ajustado + "\n"
+                 nome_mae_falecido + "\n"
+              + //nome_mae_falecido_ajustado    + "\n"                 
+                data_Nascimento + "\n"
+               + data_Obito + "\n"
+               + cpf + "\n"
+               + nit + "\n"
+               + tipo_identifica_cartorio + "\n"
+               + Id_cartorio + "\n"
+                        + DN_SISOBI_Ajustada + "\n"
+                + ANO_OBITO + "\n "
+                +  MES_OBITO + "\n"
+                +  DO_SISOBI_Ajustada + "\n"
+                + Nome_Arquivo_Importado );
                
                 System.out.println(
                " Resultado para o banco de dados !" + "\n" +      
@@ -260,14 +292,13 @@ public class Arquivo_txt {
                + nit + "\n"
                + tipo_identifica_cartorio + "\n"
                + Id_cartorio + "\n"
-                        + Id_cartorio_ajustado);
+                        + DN_SISOBI_Ajustada + "\n"
+                + ANO_OBITO + "\n "
+                +  MES_OBITO + "\n"
+                +  DO_SISOBI_Ajustada + "\n"
+                + Nome_Arquivo_Importado );
                
-               String DN_SISOBI_Ajustada = lineText.substring(154, 162);
-               String nome_arquivo = arquivo.getName();
-               String ANO_OBITO = nome_arquivo.substring(3,7 );             
-               String MES_OBITO = nome_arquivo.substring(7,9 ) ;
-               String DO_SISOBI_Ajustada = lineText.substring(163, 171);
-               String Nome_Arquivo_Importado = nome_arquivo;
+              
  
                 statement.setString(1, livro_n);
                 statement.setString(2, folha_n);
@@ -296,6 +327,8 @@ public class Arquivo_txt {
                 if (count % batchSize == 0) {
                     statement.executeBatch();
                 }
+                
+                registro++;
             }
  
             lineReader.close();
@@ -310,7 +343,8 @@ public class Arquivo_txt {
            
  }catch(SQLException ex){
      
-  mensagem.append("Erro sql ao salvar o arquivo" + arquivo.getName() + " MYSQL error codigo : " + ex.getErrorCode() );
+  mensagem.append("\n"+ "\n" + "Erro sql ao importar o arquivo " + arquivo.getName() + 
+          "\n" +  "MYSQL error codigo : " + ex.getErrorCode()+  " "+ ex.getMessage() );
  
  
  

@@ -32,6 +32,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         setSize(800, 600);
         salve_csv_to_db.setVisible(false);
         Converte_txt_to_csv.setVisible(false);
+         setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -45,7 +46,9 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
         Converte_txt_to_csv = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
         salve_csv_to_db = new javax.swing.JTextArea();
 
         getContentPane().setLayout(null);
@@ -58,26 +61,31 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(10, 10, 190, 23);
+        jButton1.setBounds(10, 10, 220, 23);
 
-        jButton2.setText("Salvar Arquivo CSV no Banco");
+        jButton2.setText("Importar Arquivo CSV Para o Banco");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(10, 140, 190, 23);
+        jButton2.setBounds(10, 260, 220, 23);
 
         Converte_txt_to_csv.setColumns(20);
         Converte_txt_to_csv.setRows(5);
-        getContentPane().add(Converte_txt_to_csv);
-        Converte_txt_to_csv.setBounds(10, 40, 760, 94);
+        jScrollPane1.setViewportView(Converte_txt_to_csv);
 
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 40, 1280, 200);
+
+        salve_csv_to_db.setEditable(false);
         salve_csv_to_db.setColumns(20);
         salve_csv_to_db.setRows(5);
-        getContentPane().add(salve_csv_to_db);
-        salve_csv_to_db.setBounds(10, 170, 770, 94);
+        jScrollPane2.setViewportView(salve_csv_to_db);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(10, 290, 1280, 180);
     }// </editor-fold>//GEN-END:initComponents
 
      public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
@@ -173,6 +181,8 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     private javax.swing.JTextArea Converte_txt_to_csv;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }
