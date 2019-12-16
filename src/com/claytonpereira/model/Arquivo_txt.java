@@ -20,9 +20,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import jdk.nashorn.internal.ir.CatchNode;
 
 /**
  *
@@ -31,8 +33,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Arquivo_txt {
    
     
-    public Vector abrir_ler_arquivo_txt(File arquivo) throws FileNotFoundException, IOException,StringIndexOutOfBoundsException{
+    public Vector abrir_ler_arquivo_txt(File arquivo, JTextArea mensagem) throws FileNotFoundException, IOException,StringIndexOutOfBoundsException{
           Vector texto = new Vector(8,3); 
+          
+          mensagem.setText("Arquivo TXT selecionado : " + arquivo.getName() +  "..." + "\n" );
+          mensagem.setEditable(false);
+          mensagem.setVisible(true);
+         
         try ( 
              FileInputStream fstream = new FileInputStream(arquivo)) {
             BufferedReader leitor = new BufferedReader(new InputStreamReader(fstream));
@@ -79,27 +86,31 @@ public class Arquivo_txt {
         }
      
 }
-    public void conteudo_arquivo_csv_sisob(File arquivo) throws IOException{
-       Vector conteudo = abrir_ler_arquivo_txt(arquivo);
+    public void conteudo_arquivo_csv_sisob(File arquivo,JTextArea mensagem) throws IOException{
+       Vector conteudo = abrir_ler_arquivo_txt(arquivo,mensagem);
        int i = 0 ;
        while(i < conteudo.size()){
          System.out.print(conteudo.get(i) + "\n");
          i++;
     }}
     
-    public void salvar_arquivo_txt_to_csv(File arquivo, String title) throws IOException{
-    
+    public void salvar_arquivo_txt_to_csv(File arquivo, String title, JTextArea mensagem) throws IOException{
+     
+        
+        
      String data = "Test data";
-     Vector conteudo = abrir_ler_arquivo_txt(arquivo);
+     Vector conteudo = abrir_ler_arquivo_txt(arquivo,mensagem);
        int i = 0 ;
        
           JFileChooser chooser = new JFileChooser();
        //chooser.setCurrentDirectory(new java.io.File("."));
        chooser.setDialogTitle(title);
-      
-       int CHECK = chooser.showSaveDialog(chooser); 
        
        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+       int CHECK = chooser.showSaveDialog(chooser); 
+       
+      
+       
        FileFilter filter = new FileNameExtensionFilter("Arquivo CSV", "csv");
         chooser.addChoosableFileFilter(filter);  
         chooser.setAcceptAllFileFilterUsed(false);
@@ -113,21 +124,26 @@ public class Arquivo_txt {
             }  if((CHECK == JFileChooser.APPROVE_OPTION))
             {  // chooser.showSaveDialog(chooser);
                 
-                System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName() );     
+                
+                String arquivo_csv = arquivo.getName();
+             String  arquivo_csv_ajustado =  arquivo_csv.substring(0,9);
+                System.out.print("arquivo escolhido processado " +  arquivo_csv_ajustado + "\n" );
+                FileOutputStream out =   new FileOutputStream( chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
+                System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" );     
 
-                FileOutputStream out =   new FileOutputStream( chooser.getCurrentDirectory() + "\\" + chooser.getSelectedFile().getName());
+       while(i < conteudo.size()){ 
 
-       while(i < conteudo.size()){
-           
         data = conteudo.get(i).toString() + "\n";
        out.write(data.getBytes());
            System.out.println("linha = " + i);
         i++;
-           
+        
        } 
      
      
-      
+       mensagem.append("Arquivo TXT convertido para csv "
+               + "\n" + "e salvo em : " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" + "..." + "\n");
+          mensagem.setVisible(true);
       out.close();
                
         }
@@ -136,8 +152,9 @@ public class Arquivo_txt {
  
  
 }
- public void export_csv_to_db(File arquivo) throws FileNotFoundException, SQLException, IOException{
-     
+ public void export_csv_to_db(File arquivo, JTextArea mensagem) throws FileNotFoundException, SQLException, IOException{
+  
+  
  String sql = "INSERT INTO registros_sisob (" +
      "livro_num," +
 	"folha_num," +
@@ -175,6 +192,8 @@ public class Arquivo_txt {
         + "?,"
         + "?,"
         + "?)";
+ 
+ try {
  DatabaseConnectionMysql con_db = new DatabaseConnectionMysql();
  Connection  conexao =  con_db.database_connection();
   
@@ -192,7 +211,8 @@ public class Arquivo_txt {
             while ((lineText = lineReader.readLine()) != null) {
                 
                 //String livro_n = lineText.split(";");
-                
+               
+             
                 String livro_n =  lineText.substring(0, 6);
                String folha_n = lineText.substring(7, 12);
                String termo_obito_n = lineText.substring(13, 23);
@@ -239,10 +259,11 @@ public class Arquivo_txt {
                         + Id_cartorio_ajustado);
                
                String DN_SISOBI_Ajustada = lineText.substring(154, 162);
-               String ANO_OBITO = "2019";
-               String MES_OBITO = "01";
+               String nome_arquivo = arquivo.getName();
+               String ANO_OBITO = nome_arquivo.substring(3,7 );             
+               String MES_OBITO = nome_arquivo.substring(7,9 ) ;
                String DO_SISOBI_Ajustada = lineText.substring(163, 171);
-               String Nome_Arquivo_Importado = "arquivotext2.csv";
+               String Nome_Arquivo_Importado = nome_arquivo;
  
                 statement.setString(1, livro_n);
                 statement.setString(2, folha_n);
@@ -277,14 +298,24 @@ public class Arquivo_txt {
  
             // execute the remaining queries
             statement.executeBatch();
- 
+            
             conexao.commit();
+              
+
             conexao.close();
+           
+ }catch(SQLException ex){
+     
+  mensagem.append("Erro sql ao salvar o arquivo" + arquivo.getName() + " MYSQL error codigo : " + ex.getErrorCode() );
  
+ 
+ 
+ }
       
  
  
  
  }
+
 
 }
