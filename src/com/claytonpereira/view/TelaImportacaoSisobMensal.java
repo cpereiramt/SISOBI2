@@ -46,7 +46,6 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         Converte_txt_to_csv = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
         salve_csv_to_db = new javax.swing.JTextArea();
 
         getContentPane().setLayout(null);
@@ -73,14 +72,12 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         Converte_txt_to_csv.setColumns(20);
         Converte_txt_to_csv.setRows(5);
         getContentPane().add(Converte_txt_to_csv);
-        Converte_txt_to_csv.setBounds(10, 40, 730, 94);
+        Converte_txt_to_csv.setBounds(10, 40, 760, 94);
 
         salve_csv_to_db.setColumns(20);
         salve_csv_to_db.setRows(5);
-        jScrollPane1.setViewportView(salve_csv_to_db);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 180, 730, 96);
+        getContentPane().add(salve_csv_to_db);
+        salve_csv_to_db.setBounds(10, 170, 770, 94);
     }// </editor-fold>//GEN-END:initComponents
 
      public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
@@ -101,8 +98,6 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         if (returnVal == JFileChooser.APPROVE_OPTION){
            
           arquivo = selecionaarquivo.getSelectedFile();
-           mensagem.setVisible(true);
-          mensagem.setText("Arquivo :" + arquivo.getName() + " selecionado para importação para o banco!" + "\n");
           System.out.println("abrindo: " + arquivo.getName());
         
           
@@ -123,10 +118,14 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     File arquivo = null ;
+        Converte_txt_to_csv.setVisible(false);
+        
+        File arquivo = null ;
         try {
             
             arquivo = seleciona_arquivo(this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
+            
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,8 +133,9 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
            Arquivo_txt txt = new Arquivo_txt();
         try {
           
-          
+             
             txt.salvar_arquivo_txt_to_csv(arquivo,"Escolha o arquivo Csv",Converte_txt_to_csv);
+           
         } catch (IOException ex) {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,16 +146,20 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+       salve_csv_to_db.setVisible(false);
         File arquivo = null ;
       
         try {
             
             arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
+           
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
         }
         Arquivo_txt texto = new Arquivo_txt();
         try {
+           
+           
             texto.export_csv_to_db(arquivo, salve_csv_to_db);
         } catch (SQLException ex) {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,7 +173,6 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     private javax.swing.JTextArea Converte_txt_to_csv;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }

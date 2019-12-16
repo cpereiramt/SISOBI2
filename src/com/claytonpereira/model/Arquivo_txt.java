@@ -95,8 +95,7 @@ public class Arquivo_txt {
     }}
     
     public void salvar_arquivo_txt_to_csv(File arquivo, String title, JTextArea mensagem) throws IOException{
-     
-        
+
         
      String data = "Test data";
      Vector conteudo = abrir_ler_arquivo_txt(arquivo,mensagem);
@@ -107,6 +106,8 @@ public class Arquivo_txt {
        chooser.setDialogTitle(title);
        
        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+       
+      
        int CHECK = chooser.showSaveDialog(chooser); 
        
       
@@ -153,7 +154,10 @@ public class Arquivo_txt {
  
 }
  public void export_csv_to_db(File arquivo, JTextArea mensagem) throws FileNotFoundException, SQLException, IOException{
-  
+     mensagem.repaint();
+     mensagem.setVisible(true);         
+     mensagem.setText("Importando o arquivo para o banco de dados ! ... " + "\n");
+    
   
  String sql = "INSERT INTO registros_sisob (" +
      "livro_num," +
