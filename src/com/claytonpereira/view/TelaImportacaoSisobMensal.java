@@ -90,7 +90,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
      public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
-    File arquivo = null;
+      File arquivo = null;
     int i;
     
     
@@ -130,7 +130,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
        
         Converte_txt_to_csv.setVisible(false);
         
-        Thread abre_arquivo = new Thread(new Runnable() {
+        Thread thread_abre_arquivo = new Thread(new Runnable() {
             @Override
             public void run() {
                 File arquivo = null ;
@@ -161,7 +161,8 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         });
         
         
-        SwingUtilities.invokeLater(abre_arquivo);
+        thread_abre_arquivo.setName("thread_Abre_Arquivo_txt");
+        thread_abre_arquivo.start();
            
       
         

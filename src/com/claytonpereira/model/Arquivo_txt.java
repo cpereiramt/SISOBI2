@@ -54,12 +54,7 @@ public class Arquivo_txt {
         mensagem.setText("Arquivo TXT selecionado : " + arquivo.getName() + "..." + "\n" + "\n");
         mensagem.setEditable(false);
         mensagem.setVisible(true);
-        
-        
-                               
-          
-
-        try (
+ try (
                 FileInputStream fstream = new FileInputStream(arquivo)) {
             BufferedReader leitor = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
@@ -114,12 +109,20 @@ public class Arquivo_txt {
 
     public void salvar_arquivo_txt_to_csv(File arquivo, String title, JTextArea mensagem) throws IOException, InterruptedException {
        
-                
-                    Arquivo_txt texto = new Arquivo_txt();
+                Thread thread_salvar_arquivo_txt_csv = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                      Arquivo_txt texto = new Arquivo_txt();
                     texto.mensagem = mensagem;
                     
                
-                 conteudo = abrir_ler_arquivo_txt(arquivo, texto.mensagem);
+                        try {
+                            conteudo = abrir_ler_arquivo_txt(arquivo, texto.mensagem);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (StringIndexOutOfBoundsException ex) {
+                            Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                  
                  
              
@@ -152,31 +155,27 @@ public class Arquivo_txt {
                         Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
-                    Thread convertendo_arquivo = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+                   
                       mensagem.append("Convertendo ........." + "\n" + "\n");
                         }
-                    });
+                    
                    
                     
-                   SwingUtilities.invokeLater(convertendo_arquivo);
-                }
+                  
+                
             
         
 
 
 
-      Thread loop_conteudo = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+     
                             int i = 0;
                             while (i < conteudo.size()) {
-  {
+  {            
                      data = conteudo.get(i).toString() + "\n";
                      mensagem.append("Linha = " + i + "  | " + data);
                     System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-
+                       SwingUtilities.invokeLater(this);
                    
                    
                     try {
@@ -203,23 +202,25 @@ public class Arquivo_txt {
                 
 
             
-  }}
-                        }
-      });
+  }
+                        
+    
       
-     SwingUtilities.invokeLater(loop_conteudo);
+     
                 
-             
-       Thread mostra_mensagem = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
+     
                             mensagem.append("\n" + "Arquivo TXT convertido para csv e salvo em : " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" + "..." + "\n");
      mensagem.setVisible(true);
-                        }
-       });
-      SwingUtilities.invokeLater(mostra_mensagem);
+                     
+       
+      
      
-    }
+    }  
+                    }
+                });
+                thread_salvar_arquivo_txt_csv.setName("thread_salvar_arquivo_txt_csv");
+                thread_salvar_arquivo_txt_csv.start();
+                    }
                 
 
                 
