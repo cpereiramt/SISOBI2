@@ -5,6 +5,7 @@
  */
 package com.claytonpereira.model;
 
+import com.claytonpereira.view.TelaImportacaoSisobMensal;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,22 +19,23 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
+
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jdk.nashorn.internal.ir.CatchNode;
+
 
 /**
  *
  * @author claytonpereira
  */
-public class Arquivo_txt {
+public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
 
     static Vector conteudo;
     String data;
@@ -42,20 +44,47 @@ public class Arquivo_txt {
     String arquivo_csv;
     String arquivo_csv_ajustado;
     static JTextArea mensagem;
-
+    JFileChooser selecionaarquivo = TelaImportacaoSisobMensal.selecionaarquivo;
+    JTextArea converte_txt_to_csv = TelaImportacaoSisobMensal.Converte_txt_to_csv;
+    File arquivo = TelaImportacaoSisobMensal.arquivo;
     
+        @Override
+    protected Void doInBackground() throws Exception {
+           List<String> texto = format_txt_to_csv(arquivo);
+           int i = 0;
+           while(i<texto.size()){
+           publish(texto.get(i));
+         
+           
+           i++;
+           }
+           
+           
+        return null;
+    }
     
+    @Override
+    protected void process(List<String> pairs) {
+       
+        for(int i = 0 ; i < pairs.size() -1 ; i++){
+            
+            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+            TelaImportacaoSisobMensal.Converte_txt_to_csv.append(pairs.get(i) + "\n");
+            TelaImportacaoSisobMensal.Converte_txt_to_csv.updateUI();
+             System.out.print("\n" +" rodando dentro de process ........ " + pairs.get(i)+  "==" + i + "\n");
+              
+        }
+       
+        
+        
+        
+    }
     
-    
-    
-    public Vector abrir_ler_arquivo_txt(File arquivo, JTextArea mensagem) throws FileNotFoundException, IOException, StringIndexOutOfBoundsException {
+    public Vector format_txt_to_csv(File arquivo) throws FileNotFoundException, IOException, StringIndexOutOfBoundsException {
          Vector texto = new Vector(8, 3); 
       
-        mensagem.setText("Arquivo TXT selecionado : " + arquivo.getName() + "..." + "\n" + "\n");
-        mensagem.setEditable(false);
-        mensagem.setVisible(true);
- try (
-                FileInputStream fstream = new FileInputStream(arquivo)) {
+try (
+            FileInputStream fstream = new FileInputStream(arquivo)) {
             BufferedReader leitor = new BufferedReader(new InputStreamReader(fstream));
             String strLine;
 
@@ -88,8 +117,7 @@ public class Arquivo_txt {
                         + tipo_identifica_cartorio + ";"
                         + Id_cartorio + ";";
 
-                System.out.println(line);
-                texto.add(line);
+                        texto.add(line);
 
             }
 
@@ -98,34 +126,19 @@ public class Arquivo_txt {
 
     }
 
-    public void conteudo_arquivo_csv_sisob(File arquivo, JTextArea mensagem) throws IOException {
-        Vector conteudo = abrir_ler_arquivo_txt(arquivo, mensagem);
-        int i = 0;
-        while (i < conteudo.size()) {
-            System.out.print(conteudo.get(i) + "\n");
-            i++;
-        }
-    }
-
     public void salvar_arquivo_txt_to_csv(File arquivo, String title, JTextArea mensagem) throws IOException, InterruptedException {
-       
-                Thread thread_salvar_arquivo_txt_csv = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                      Arquivo_txt texto = new Arquivo_txt();
-                    texto.mensagem = mensagem;
+                    Arquivo_txt_task texto = new Arquivo_txt_task();
+                    
                     
                
                         try {
-                            conteudo = abrir_ler_arquivo_txt(arquivo, texto.mensagem);
+                            conteudo = format_txt_to_csv(arquivo);
                         } catch (IOException ex) {
-                            Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (StringIndexOutOfBoundsException ex) {
-                            Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                         }
                  
-                 
-             
                 chooser.setDialogTitle(title);
 
                 chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -142,7 +155,7 @@ public class Arquivo_txt {
 
                 }
 
-                if ((CHECK == JFileChooser.APPROVE_OPTION)) {  // chooser.showSaveDialog(chooser);                
+                if ((CHECK == JFileChooser.APPROVE_OPTION)) {             
 
                     arquivo_csv = arquivo.getName();
                     arquivo_csv_ajustado = arquivo_csv.substring(0, 9);
@@ -152,41 +165,26 @@ public class Arquivo_txt {
 
                         out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
                     } catch (FileNotFoundException ex) {
-                        Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                   
-                      mensagem.append("Convertendo ........." + "\n" + "\n");
+                     
                         }
-                    
-                   
-                    
-                  
-                
-            
-        
 
-
-
-     
                             int i = 0;
                             while (i < conteudo.size()) {
   {            
                      data = conteudo.get(i).toString() + "\n";
                      mensagem.append("Linha = " + i + "  | " + data);
                     System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-                       SwingUtilities.invokeLater(this);
-                   
-                   
-                    try {
+try {
                         out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
                     } catch (FileNotFoundException ex) {
-                        Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     try {
                        out.write(data.getBytes());
                     } catch (IOException ex) {
-                        Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     System.out.println("linha = " + i);
                     
@@ -196,31 +194,13 @@ public class Arquivo_txt {
                     try {
                         out.close();
                     } catch (IOException ex) {
-                        Logger.getLogger(Arquivo_txt.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                     }
-   
-                
+}
 
-            
-  }
-                        
-    
-      
-     
-                
-     
-                            mensagem.append("\n" + "Arquivo TXT convertido para csv e salvo em : " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv" + "..." + "\n");
-     mensagem.setVisible(true);
-                     
-       
-      
-     
-    }  
+ }  
                     }
-                });
-                thread_salvar_arquivo_txt_csv.setName("thread_salvar_arquivo_txt_csv");
-                thread_salvar_arquivo_txt_csv.start();
-                    }
+              
                 
 
                 
@@ -407,5 +387,7 @@ public class Arquivo_txt {
         }
 
     }
+
+
 
 }
