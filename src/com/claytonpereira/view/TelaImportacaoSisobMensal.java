@@ -175,25 +175,25 @@ public static   File arquivo;
        salve_csv_to_db.setVisible(false);
         File arquivo = null ;
       
-        try {
+       // try {
             
-            arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
-           
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+          //  arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
+//           
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         Arquivo_txt_task texto = new Arquivo_txt_task();
-        try {
+      //  try {
            
            
-            texto.export_csv_to_db(arquivo, salve_csv_to_db);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            texto.export_csv_to_db(arquivo, salve_csv_to_db);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+
     }//GEN-LAST:event_jButton2ActionPerformed
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JTextArea Converte_txt_to_csv;
