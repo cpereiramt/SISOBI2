@@ -6,6 +6,7 @@
 package com.claytonpereira.model;
 
 import com.claytonpereira.view.TelaImportacaoSisobMensal;
+import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,51 +48,52 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
     String arquivo_csv_ajustado;
     static JTextArea mensagem;
     JFileChooser selecionaarquivo = TelaImportacaoSisobMensal.selecionaarquivo;
-    JTextArea converte_txt_to_csv = TelaImportacaoSisobMensal.Converte_txt_to_csv;
+    TextArea converte_txt_to_csv = TelaImportacaoSisobMensal.Converte_txt_to_csv;
     File arquivo = TelaImportacaoSisobMensal.arquivo;
-    
+      int linhas = 0 ;
         @Override
     protected Void doInBackground() throws Exception {
-          TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+        
+        
+   linhas=0;
+    TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
            List<String> texto = format_txt_to_csv(arquivo);
            
            int i = 0;
-           TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
+        
            while(i<texto.size()){
            publish(texto.get(i));
-           Thread.sleep(200);
-          
-           TelaImportacaoSisobMensal.Converte_txt_to_csv.append(texto.get(i) + "\n");
-            
-          
            i++;
          
            }         
-           
+          
         return null;
     }
     
     
      
-//    @Override
-//    protected void process(List<String> pairs) {
-// 
-//     for (String texto : pairs) {
-//             TelaImportacaoSisobMensal.Converte_txt_to_csv.revalidate();
-//            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
-//            TelaImportacaoSisobMensal.Converte_txt_to_csv.append(texto + "\n");
-//           
-//         
-//            
-//            
-//             System.out.print("\n" +" rodando dentro de process ........ " + texto +  "=="  + "\n");
-//              
-//        }
-//       
+   @Override
+   protected void process(List<String> pairs) {
+            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+     
+    for (String texto : pairs) {
+        
+               
+           TelaImportacaoSisobMensal.Converte_txt_to_csv.append("linha = " + linhas + " " +  texto + "\n");
+        
+        linhas++;     
+       }
+      
+     
         
         
-        
-   // }
+    }
     
     public Vector format_txt_to_csv(File arquivo) throws FileNotFoundException, IOException, StringIndexOutOfBoundsException {
          Vector texto = new Vector(8, 3); 

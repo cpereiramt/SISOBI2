@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import java.awt.TextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -46,53 +46,38 @@ public static   File arquivo;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Converte_txt_to_csv = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        salve_csv_to_db = new javax.swing.JTextArea();
+        Converte_txt_jb = new javax.swing.JButton();
+        importa_csv_jb = new javax.swing.JButton();
+        Converte_txt_to_csv = new java.awt.TextArea();
+        salve_csv_to_db = new java.awt.TextArea();
 
         getContentPane().setLayout(null);
 
-        jButton1.setText("Converter TXT para CSV");
-        jButton1.setToolTipText("O arquivo no formato = OBI + Ano com quatro digitos + mês com dois digitos exemplo: arquivo de janeiro de 2019, ficaria assim OBI201901 . ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Converte_txt_jb.setText("Converter TXT para CSV");
+        Converte_txt_jb.setToolTipText("O arquivo no formato = OBI + Ano com quatro digitos + mês com dois digitos exemplo: arquivo de janeiro de 2019, ficaria assim OBI201901 . ");
+        Converte_txt_jb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Converte_txt_jbActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(10, 10, 220, 23);
+        getContentPane().add(Converte_txt_jb);
+        Converte_txt_jb.setBounds(10, 10, 220, 23);
 
-        jButton2.setText("Importar Arquivo CSV Para o Banco");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        importa_csv_jb.setText("Importar Arquivo CSV Para o Banco");
+        importa_csv_jb.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                importa_csv_jbActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(10, 260, 220, 23);
-
-        jScrollPane1.setAutoscrolls(true);
-
-        Converte_txt_to_csv.setColumns(20);
-        Converte_txt_to_csv.setRows(5);
-        jScrollPane1.setViewportView(Converte_txt_to_csv);
-
-        getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(10, 40, 1280, 200);
-
-        salve_csv_to_db.setEditable(false);
-        salve_csv_to_db.setColumns(20);
-        salve_csv_to_db.setRows(5);
-        jScrollPane2.setViewportView(salve_csv_to_db);
-
-        getContentPane().add(jScrollPane2);
-        jScrollPane2.setBounds(10, 290, 1280, 180);
+        getContentPane().add(importa_csv_jb);
+        importa_csv_jb.setBounds(10, 260, 220, 23);
+        getContentPane().add(Converte_txt_to_csv);
+        Converte_txt_to_csv.setBounds(10, 50, 1280, 180);
+        getContentPane().add(salve_csv_to_db);
+        salve_csv_to_db.setBounds(10, 290, 1280, 200);
     }// </editor-fold>//GEN-END:initComponents
 
-     public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
+     public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,TextArea mensagem, String title) throws FileNotFoundException{
       File arquivo = null;
     
     
@@ -127,26 +112,24 @@ public static   File arquivo;
     
     
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       SwingUtilities.invokeLater(new Runnable() {
-            @Override
-           public void run() {
+    private void Converte_txt_jbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Converte_txt_jbActionPerformed
+     
                Converte_txt_to_csv.setVisible(false);
        
                 //arquivo = null ;
-        try {
+                try {
+                    arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+                }
             
-            arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
             
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
         
            Arquivo_txt_task txt = new Arquivo_txt_task();
            txt.execute();
            
-           }
+       
            
         
 //        try {
@@ -167,12 +150,12 @@ public static   File arquivo;
           
       
         
-       });
+    
         
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_Converte_txt_jbActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void importa_csv_jbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importa_csv_jbActionPerformed
         // TODO add your handling code here:
        salve_csv_to_db.setVisible(false);
         File arquivo = null ;
@@ -194,15 +177,13 @@ public static   File arquivo;
 //        } catch (IOException ex) {
 //            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_importa_csv_jbActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTextArea Converte_txt_to_csv;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JTextArea salve_csv_to_db;
+    public static javax.swing.JButton Converte_txt_jb;
+    public static java.awt.TextArea Converte_txt_to_csv;
+    public static javax.swing.JButton importa_csv_jb;
+    private java.awt.TextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }
