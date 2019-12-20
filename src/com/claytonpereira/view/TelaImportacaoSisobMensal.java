@@ -35,6 +35,8 @@ public static   File arquivo;
         salve_csv_to_db.setVisible(false);
         Converte_txt_to_csv.setVisible(false);
          setExtendedState(MAXIMIZED_BOTH);
+         JL_Converter_txt.setVisible(false);
+         JL_Importar_CSV.setVisible(false);
     }
 
     /**
@@ -113,10 +115,7 @@ public static   File arquivo;
             JOptionPane.showMessageDialog(tela, "Nenhum arquivo selecionado !");
         
         }
-        
-        
-        
-        return arquivo;
+       return arquivo;
     }
     
     
@@ -133,12 +132,9 @@ public static   File arquivo;
                     Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Arquivo_txt_task txt = new Arquivo_txt_task();
-                 txt.execute();
+                txt.thread_format_text();
            
-    try {
-        txt.salvar_arquivo_txt_to_csv(arquivo,"Escolha o arquivo Csv",Converte_txt_to_csv);
-        
-        
+       
         
         
 //            try {
@@ -152,11 +148,7 @@ public static   File arquivo;
 //        }
 //       
 //                
-    } catch (IOException ex) {
-        Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (InterruptedException ex) {
-        Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-    }
+   
 
           
       
@@ -195,8 +187,8 @@ public static   File arquivo;
     public static java.awt.TextArea Converte_txt_to_csv;
     public static javax.swing.JButton JB_Converte_txt;
     public static javax.swing.JButton JB_Importa_csv;
-    private javax.swing.JLabel JL_Converter_txt;
-    private javax.swing.JLabel JL_Importar_CSV;
+    public static javax.swing.JLabel JL_Converter_txt;
+    public static javax.swing.JLabel JL_Importar_CSV;
     private java.awt.TextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }

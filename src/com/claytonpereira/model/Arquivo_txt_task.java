@@ -6,6 +6,8 @@
 package com.claytonpereira.model;
 
 import com.claytonpereira.view.TelaImportacaoSisobMensal;
+import static com.claytonpereira.view.TelaImportacaoSisobMensal.Converte_txt_to_csv;
+import static com.claytonpereira.view.TelaImportacaoSisobMensal.arquivo;
 import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,6 +31,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -38,7 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author claytonpereira
  */
-public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
+public class Arquivo_txt_task {
 
     static Vector conteudo;
     String data;
@@ -51,48 +54,74 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
     TextArea converte_txt_to_csv = TelaImportacaoSisobMensal.Converte_txt_to_csv;
     File arquivo = TelaImportacaoSisobMensal.arquivo;
       int linhas = 0 ;
-        @Override
-    protected Void doInBackground() throws Exception {
-        
-      if(TelaImportacaoSisobMensal.JB_Converte_txt.getModel().isPressed()){
-      
-       JOptionPane.showMessageDialog(null, "botao pressionado");
       
       
-      }
-   linhas=0;
-    TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
-           List<String> texto = format_txt_to_csv(arquivo);
-           
-           int i = 0;
-        
-           while(i<texto.size()){
-           publish(texto.get(i));
-           i++;
-         
-           }         
+      public void thread_format_text(){
           
-        return null;
-    }
-    
-    
+     SwingWorker<Void,String> work = new SwingWorker<Void,String>(){     
+    @Override
+    protected Void doInBackground() throws Exception {
+    linhas=0;
+    TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
+    TelaImportacaoSisobMensal.JL_Converter_txt.setText("Convertendo arquivo: " + arquivo.getName());
+    Thread.sleep(200);
+     TelaImportacaoSisobMensal.JL_Converter_txt.setVisible(true);
+           List<String> texto = format_txt_to_csv(arquivo);           
+           int i = 0;    
+           int linhas = texto.size();
+           while(i<texto.size()){
+             TelaImportacaoSisobMensal.JL_Converter_txt.setText("Linha : " + i + " de" + linhas + " convertido - " );
+           publish(texto.get(i));
+           i++;         
+           }            
+           return null;
+    }    
      
    @Override
    protected void process(List<String> pairs) {
             TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);  
-          
-        
- 
-     
-    for (String texto : pairs) {       
-               
-           TelaImportacaoSisobMensal.Converte_txt_to_csv.append("linha = " + linhas + " " +  texto + "\n");
+          for (String texto : pairs) {       
+          TelaImportacaoSisobMensal.Converte_txt_to_csv.append("linha = " + linhas + " " +  texto + "\n");
         
         linhas++;     
        }     
         
     }
+   
+   @Override
+    protected void done(){
+   thread_import_text();    
+    }     
+     };
+     work.execute();
     
+    }
+        
+    
+            
+      public void thread_import_text(){
+          
+     SwingWorker<Void,String> work2 = new SwingWorker<Void,String>(){     
+    @Override
+    protected Void doInBackground() throws Exception {
+    
+                    salvar_arquivo_txt_to_csv(arquivo,"Escolha o diretório para salvar o csv", TelaImportacaoSisobMensal.Converte_txt_to_csv);   
+           return null;
+    }
+    
+    @Override
+    protected void done(){
+    JOptionPane.showMessageDialog(null, "arquivo txt convertido com sucesso !");
+    
+    }
+     
+  
+     };
+     
+     work2.execute();
+    
+    }
+        
     public Vector format_txt_to_csv(File arquivo) throws FileNotFoundException, IOException, StringIndexOutOfBoundsException {
          Vector texto = new Vector(8, 3); 
       
@@ -181,38 +210,24 @@ try (
                         Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
                     }
                      
-                        }
-
-                            int i = 0;
-                            while (i < conteudo.size()) {
-  {            
+                        }   int i = 0;
+                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
+                        while (i < conteudo.size()) {             
                      data = conteudo.get(i).toString() + "\n";
                      //mensagem.append("Linha = " + i + "  | " + data);
                     //System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-try {
-                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-                    } catch (FileNotFoundException ex) {
-                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                       out.write(data.getBytes());
-                    } catch (IOException ex) {
-                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                  
-                    
-                    i++;
 
+                     out.write(data.getBytes());  
                    
-                    try {
-                        out.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-}
-
- }  
-                    }
+i++;
+ 
+ 
+  }
+                 
+                 out.close();
+    
+    
+    }
               
                 
 
