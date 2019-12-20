@@ -54,7 +54,12 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
         @Override
     protected Void doInBackground() throws Exception {
         
-        
+      if(TelaImportacaoSisobMensal.JB_Converte_txt.getModel().isPressed()){
+      
+       JOptionPane.showMessageDialog(null, "botao pressionado");
+      
+      
+      }
    linhas=0;
     TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
            List<String> texto = format_txt_to_csv(arquivo);
@@ -74,24 +79,17 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
      
    @Override
    protected void process(List<String> pairs) {
-            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
-        try {
-            Thread.sleep(1);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);  
+          
+        
  
      
-    for (String texto : pairs) {
-        
+    for (String texto : pairs) {       
                
            TelaImportacaoSisobMensal.Converte_txt_to_csv.append("linha = " + linhas + " " +  texto + "\n");
         
         linhas++;     
-       }
-      
-     
-        
+       }     
         
     }
     
@@ -141,80 +139,80 @@ try (
 
     }
 
-//    public void salvar_arquivo_txt_to_csv(File arquivo, String title, JTextArea mensagem) throws IOException, InterruptedException {
-//                    //Arquivo_txt_task texto = new Arquivo_txt_task();
-//                    
-//                    
-//               
-//                        try {
-//                            conteudo = format_txt_to_csv(arquivo);
-//                        } catch (IOException ex) {
-//                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                        } catch (StringIndexOutOfBoundsException ex) {
-//                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                 
-//                chooser.setDialogTitle(title);
-//
-//                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//
-//                int CHECK = chooser.showSaveDialog(chooser);
-//
-//                FileFilter filter = new FileNameExtensionFilter("Arquivo CSV", "csv");
-//                chooser.addChoosableFileFilter(filter);
-//                chooser.setAcceptAllFileFilterUsed(false);
-//
-//                if ((CHECK == JFileChooser.CANCEL_OPTION)) {
-//                    System.out.println("Não selecionou nenhum arquivo");
-//                    JOptionPane.showMessageDialog(null, "Nenhum arquivo selecionado!");
-//
-//                }
-//
-//                if ((CHECK == JFileChooser.APPROVE_OPTION)) {             
-//
-//                    arquivo_csv = arquivo.getName();
-//                    arquivo_csv_ajustado = arquivo_csv.substring(0, 9);
-//                    System.out.print("arquivo escolhido processado " + arquivo_csv_ajustado + "\n");
-//
-//                    try {
-//
-//                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-//                    } catch (FileNotFoundException ex) {
-//                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                     
-//                        }
-//
-//                            int i = 0;
-//                            while (i < conteudo.size()) {
-//  {            
-//                     data = conteudo.get(i).toString() + "\n";
-//                     mensagem.append("Linha = " + i + "  | " + data);
-//                    System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-//try {
-//                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
-//                    } catch (FileNotFoundException ex) {
-//                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    try {
-//                       out.write(data.getBytes());
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                    System.out.println("linha = " + i);
-//                    
-//                    i++;
-//
-//                   
-//                    try {
-//                        out.close();
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//}
-//
-// }  
-//                    }
+    public void salvar_arquivo_txt_to_csv(File arquivo, String title, TextArea mensagem) throws IOException, InterruptedException {
+                    //Arquivo_txt_task texto = new Arquivo_txt_task();
+                    
+                    
+               
+                        try {
+                            conteudo = format_txt_to_csv(arquivo);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (StringIndexOutOfBoundsException ex) {
+                            Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                 
+                chooser.setDialogTitle(title);
+
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+                int CHECK = chooser.showSaveDialog(chooser);
+
+                FileFilter filter = new FileNameExtensionFilter("Arquivo CSV", "csv");
+                chooser.addChoosableFileFilter(filter);
+                chooser.setAcceptAllFileFilterUsed(false);
+
+                if ((CHECK == JFileChooser.CANCEL_OPTION)) {
+                    System.out.println("Não selecionou nenhum arquivo");
+                    JOptionPane.showMessageDialog(null, "Nenhum arquivo selecionado!");
+
+                }
+
+                if ((CHECK == JFileChooser.APPROVE_OPTION)) {             
+
+                    arquivo_csv = arquivo.getName();
+                    arquivo_csv_ajustado = arquivo_csv.substring(0, 9);
+                    System.out.print("arquivo escolhido processado " + arquivo_csv_ajustado + "\n");
+
+                    try {
+
+                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
+                        }
+
+                            int i = 0;
+                            while (i < conteudo.size()) {
+  {            
+                     data = conteudo.get(i).toString() + "\n";
+                     //mensagem.append("Linha = " + i + "  | " + data);
+                    //System.out.print("arquivo convertido com sucesso !, salvo no caminho = " + chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
+try {
+                        out = new FileOutputStream(chooser.getCurrentDirectory() + "\\" + arquivo_csv_ajustado + ".csv");
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                       out.write(data.getBytes());
+                    } catch (IOException ex) {
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                  
+                    
+                    i++;
+
+                   
+                    try {
+                        out.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+}
+
+ }  
+                    }
               
                 
 
