@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.claytonpereira.controller;
-import com.claytonpereira.model.Arquivo_txt;
+import com.claytonpereira.model.Arquivo_txt_task;
 import com.claytonpereira.model.DatabaseConnectionMysql;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Principal {
      */
   /*  public static void main(String[] args) throws IOException, SQLException {
         // TODO code application logic here
-        //Arquivo_txt arquivo = new Arquivo_txt();
+        //Arquivo_txt arquivo = new Arquivo_txt_task();
         //arquivo.conteudo_arquivo_csv_sisob();
         //arquivo.salvar_arquivo_txt_to_csv();
         //arquivo.conteudo_arquivo_csv_sisob(File arquivo);

@@ -5,7 +5,7 @@
  */
 package com.claytonpereira.view;
 
-import com.claytonpereira.model.Arquivo_txt;
+import com.claytonpereira.model.Arquivo_txt_task;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -23,7 +24,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author claytonpereira
  */
 public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
-
+public static JFileChooser selecionaarquivo; 
+public static   File arquivo;
     /**
      * Creates new form TelaImportacaoSisobMensal
      */
@@ -89,12 +91,12 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
      public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
-    File arquivo = null;
-    int i;
+      File arquivo = null;
+    
     
     
            
-        JFileChooser selecionaarquivo = new JFileChooser();
+        selecionaarquivo  = new JFileChooser();
         selecionaarquivo.setDialogTitle(title);
         FileFilter filter = new FileNameExtensionFilter(desc_tipo_arquivo, extensao);
         selecionaarquivo.addChoosableFileFilter(filter);  
@@ -110,9 +112,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         
           
         }
-        
-        
-        if(returnVal == JFileChooser.CANCEL_OPTION){
+ if(returnVal == JFileChooser.CANCEL_OPTION){
             JOptionPane.showMessageDialog(tela, "Nenhum arquivo selecionado !");
         
         }
@@ -126,28 +126,46 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Converte_txt_to_csv.setVisible(false);
-        
-        File arquivo = null ;
+       SwingUtilities.invokeLater(new Runnable() {
+            @Override
+           public void run() {
+               Converte_txt_to_csv.setVisible(false);
+       
+                //arquivo = null ;
         try {
             
-            arquivo = seleciona_arquivo(this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
+            arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
             
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-           Arquivo_txt txt = new Arquivo_txt();
-        try {
-          
-             
-            txt.salvar_arquivo_txt_to_csv(arquivo,"Escolha o arquivo Csv",Converte_txt_to_csv);
+           Arquivo_txt_task txt = new Arquivo_txt_task();
+           txt.execute();
            
-        } catch (IOException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
+           }
+           
+        
+//        try {
+//          
+//             
+//            try {
+//                txt.salvar_arquivo_txt_to_csv(arquivo,"Escolha o arquivo Csv",Converte_txt_to_csv);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//           
+//        } catch (IOException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//       
+//                
+
+          
+      
+        
+       });
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -157,32 +175,32 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
        salve_csv_to_db.setVisible(false);
         File arquivo = null ;
       
-        try {
+       // try {
             
-            arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
+          //  arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
+//           
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        Arquivo_txt_task texto = new Arquivo_txt_task();
+      //  try {
            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Arquivo_txt texto = new Arquivo_txt();
-        try {
            
-           
-            texto.export_csv_to_db(arquivo, salve_csv_to_db);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//            texto.export_csv_to_db(arquivo, salve_csv_to_db);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+
     }//GEN-LAST:event_jButton2ActionPerformed
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea Converte_txt_to_csv;
+    public static javax.swing.JTextArea Converte_txt_to_csv;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea salve_csv_to_db;
+    public static javax.swing.JTextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }
