@@ -52,15 +52,18 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
     
         @Override
     protected Void doInBackground() throws Exception {
+          TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
            List<String> texto = format_txt_to_csv(arquivo);
+           
            int i = 0;
+           TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
            while(i<texto.size()){
            publish(texto.get(i));
-          JOptionPane pane = new JOptionPane();
-            pane.hide();
-            pane.showMessageDialog(null, "Atualizando Registros!");
+           Thread.sleep(200);
+          
+           TelaImportacaoSisobMensal.Converte_txt_to_csv.append(texto.get(i) + "\n");
             
-           
+          
            i++;
          
            }         
@@ -70,25 +73,25 @@ public class Arquivo_txt_task  extends javax.swing.SwingWorker<Void,String>{
     
     
      
-    @Override
-    protected void process(List<String> pairs) {
- 
-     for (String texto : pairs) {
-             TelaImportacaoSisobMensal.Converte_txt_to_csv.revalidate();
-            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
-            TelaImportacaoSisobMensal.Converte_txt_to_csv.append(texto + "\n");
-           
-         
-            
-            
-             System.out.print("\n" +" rodando dentro de process ........ " + texto +  "=="  + "\n");
-              
-        }
-       
+//    @Override
+//    protected void process(List<String> pairs) {
+// 
+//     for (String texto : pairs) {
+//             TelaImportacaoSisobMensal.Converte_txt_to_csv.revalidate();
+//            TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+//            TelaImportacaoSisobMensal.Converte_txt_to_csv.append(texto + "\n");
+//           
+//         
+//            
+//            
+//             System.out.print("\n" +" rodando dentro de process ........ " + texto +  "=="  + "\n");
+//              
+//        }
+//       
         
         
         
-    }
+   // }
     
     public Vector format_txt_to_csv(File arquivo) throws FileNotFoundException, IOException, StringIndexOutOfBoundsException {
          Vector texto = new Vector(8, 3); 

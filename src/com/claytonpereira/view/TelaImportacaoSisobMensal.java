@@ -74,6 +74,8 @@ public static   File arquivo;
         getContentPane().add(jButton2);
         jButton2.setBounds(10, 260, 220, 23);
 
+        jScrollPane1.setAutoscrolls(true);
+
         Converte_txt_to_csv.setColumns(20);
         Converte_txt_to_csv.setRows(5);
         jScrollPane1.setViewportView(Converte_txt_to_csv);
