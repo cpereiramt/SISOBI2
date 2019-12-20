@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import java.awt.TextArea;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -50,10 +51,12 @@ public static   File arquivo;
 
         JB_Converte_txt = new javax.swing.JButton();
         JB_Importa_csv = new javax.swing.JButton();
-        Converte_txt_to_csv = new java.awt.TextArea();
-        salve_csv_to_db = new java.awt.TextArea();
         JL_Converter_txt = new javax.swing.JLabel();
         JL_Importar_CSV = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Converte_txt_to_csv = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        salve_csv_to_db = new javax.swing.JTextArea();
 
         getContentPane().setLayout(null);
 
@@ -75,10 +78,6 @@ public static   File arquivo;
         });
         getContentPane().add(JB_Importa_csv);
         JB_Importa_csv.setBounds(10, 260, 220, 23);
-        getContentPane().add(Converte_txt_to_csv);
-        Converte_txt_to_csv.setBounds(10, 50, 1280, 180);
-        getContentPane().add(salve_csv_to_db);
-        salve_csv_to_db.setBounds(10, 290, 1280, 200);
 
         JL_Converter_txt.setText("jLabel1");
         getContentPane().add(JL_Converter_txt);
@@ -87,9 +86,23 @@ public static   File arquivo;
         JL_Importar_CSV.setText("jLabel2");
         getContentPane().add(JL_Importar_CSV);
         JL_Importar_CSV.setBounds(240, 260, 600, 20);
+
+        Converte_txt_to_csv.setColumns(20);
+        Converte_txt_to_csv.setRows(5);
+        jScrollPane1.setViewportView(Converte_txt_to_csv);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(10, 50, 1280, 200);
+
+        salve_csv_to_db.setColumns(20);
+        salve_csv_to_db.setRows(5);
+        jScrollPane2.setViewportView(salve_csv_to_db);
+
+        getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(10, 290, 1280, 210);
     }// </editor-fold>//GEN-END:initComponents
 
-     public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,TextArea mensagem, String title) throws FileNotFoundException{
+     public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
       File arquivo = null;
     
     
@@ -184,11 +197,13 @@ public static   File arquivo;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static java.awt.TextArea Converte_txt_to_csv;
+    public static javax.swing.JTextArea Converte_txt_to_csv;
     public static javax.swing.JButton JB_Converte_txt;
     public static javax.swing.JButton JB_Importa_csv;
     public static javax.swing.JLabel JL_Converter_txt;
     public static javax.swing.JLabel JL_Importar_CSV;
-    private java.awt.TextArea salve_csv_to_db;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    public static javax.swing.JTextArea salve_csv_to_db;
     // End of variables declaration//GEN-END:variables
 }
