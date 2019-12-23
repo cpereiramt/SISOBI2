@@ -38,6 +38,7 @@ public static   File arquivo;
          setExtendedState(MAXIMIZED_BOTH);
          JL_Converter_txt.setVisible(false);
          JL_Importar_CSV.setVisible(false);
+            JB_Importa_csv.setEnabled(false);
     }
 
     /**
@@ -166,11 +167,7 @@ public static   File arquivo;
         // TODO add your handling code here:
        salve_csv_to_db.setVisible(false);
         File arquivo = null ;
- 
-            
-//   
-
-                Arquivo_txt_task txt = new Arquivo_txt_task();
+        Arquivo_txt_task txt = new Arquivo_txt_task();
                  txt.thread_salva_csv_db();
    
 

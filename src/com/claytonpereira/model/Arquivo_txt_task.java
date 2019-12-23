@@ -55,7 +55,7 @@ public class Arquivo_txt_task {
     int linhas = 0;
     Boolean escolheu_arquivo = null ;
     public void thread_format_text() {
-
+       
         SwingWorker<Void, String> work = new SwingWorker<Void, String>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -82,7 +82,7 @@ public class Arquivo_txt_task {
                      TelaImportacaoSisobMensal.JL_Converter_txt.setText("Linha : " + linhas + " de " +  pairs.size() + " convertido");
                        TelaImportacaoSisobMensal.Converte_txt_to_csv.append( "========================================================================================================================================================================================================================= " + "\n");
                     TelaImportacaoSisobMensal.Converte_txt_to_csv.append( "linha - " + linhas + " ||  " + texto + "\n");
-
+                      
                     linhas++;
                 }
 
@@ -112,6 +112,7 @@ public class Arquivo_txt_task {
             protected void done() {
                 if(escolheu_arquivo){
                 JOptionPane.showMessageDialog(null, "arquivo convertido com sucesso !");
+                   TelaImportacaoSisobMensal.JB_Importa_csv.setEnabled(true);
                }else{
                 
                 JOptionPane.showMessageDialog(null,"Erro na importação ou nenhum diretório selecionado \n para "
@@ -139,14 +140,13 @@ public class Arquivo_txt_task {
                 int i=0;
                 while(i < texto.size()){
                 publish(texto.get(i));
-                
-                }
+                  }
                 
                 return null;
             }
             @Override
             protected void process(List<String> pairs){
-            TelaImportacaoSisobMensal.salve_csv_to_db.setVisible(true);
+                TelaImportacaoSisobMensal.salve_csv_to_db.setVisible(true);
             
             for(String texto : pairs){
                 TelaImportacaoSisobMensal.salve_csv_to_db.setText("Teste de inserção ....");
@@ -179,7 +179,7 @@ public class Arquivo_txt_task {
             String strLine;
 
             while ((strLine = leitor.readLine()) != null) {
-
+                
                 String livro_n = strLine.substring(0, 6);
                 String folha_n = strLine.substring(6, 11);
                 String termo_obito_n = strLine.substring(11, 21);
@@ -283,7 +283,10 @@ public class Arquivo_txt_task {
               Vector texto = new Vector(8, 3);
               TelaImportacaoSisobMensal telaSisob = new TelaImportacaoSisobMensal();
                              File arquivo_escolhido = telaSisob.seleciona_arquivo(tela,"arquivo CSV", "csv",TelaImportacaoSisobMensal.salve_csv_to_db,"Selecione o arquivo CSV para ser importado no banco de dados !");
- String sql = "INSERT INTO registros_sisob ("
+                         mensagem.setVisible(true);
+                          mensagem.setText("Processando arquivo" );
+                             
+                             String sql = "INSERT INTO registros_sisob ("
                + "livro_num,"
                + "folha_num,"
                + "termo_num,"
@@ -326,7 +329,7 @@ public class Arquivo_txt_task {
            Connection conexao = con_db.database_connection();
 
             PreparedStatement statement = conexao.prepareStatement(sql);
-     statement.setQueryTimeout(0);
+          
             BufferedReader lineReader = new BufferedReader(new FileReader(arquivo_escolhido));
             String lineText = null;
 
@@ -340,7 +343,7 @@ public class Arquivo_txt_task {
                //mensagem.append("\n" + "=============================================================================================================" + "\n");
                 //String livro_n = lineText.split(";");
               System.out.print( registro + " = " + "processando linhas ! \n");
-              TelaImportacaoSisobMensal.salve_csv_to_db.append(registro + " = " + "processando linhas ! \n");
+
                 String livro_n = lineText.substring(0, 6);
                 String folha_n = lineText.substring(7, 12);
                 String termo_obito_n = lineText.substring(13, 23);
@@ -391,7 +394,7 @@ public class Arquivo_txt_task {
                         + DO_SISOBI_Ajustada + "\n"
                         + Nome_Arquivo_Importado);
 
-
+                 System.out.println("rodou statement");
                 statement.setString(1, livro_n);
                 statement.setString(2, folha_n);
                 statement.setString(3, termo_obito_n);
@@ -423,9 +426,11 @@ public class Arquivo_txt_task {
             }
 
             lineReader.close();
-
+    System.out.println("Executou statement");
             // execute the remaining queries
-            statement.executeBatch();
+           statement.executeBatch();
+           
+            
 
            conexao.commit();
 
@@ -436,8 +441,8 @@ public class Arquivo_txt_task {
                    + "\n" + "MYSQL error codigo : " + ex.getErrorCode() + " " + ex.getMessage());
 //           mensagem.append("\n" + "\n" + "Erro sql ao importar o arquivo " + arquivo.getName()
 //                    + "\n" + "MYSQL error codigo : " + ex.getErrorCode() + " " + ex.getMessage());
-//
-//        }
+//   
+            
 
     }
         return texto;
