@@ -102,7 +102,7 @@ public static   File arquivo;
         jScrollPane2.setBounds(10, 290, 1280, 210);
     }// </editor-fold>//GEN-END:initComponents
 
-     public File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
+     public  File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
       File arquivo = null;
     
     
@@ -138,12 +138,16 @@ public static   File arquivo;
      
                Converte_txt_to_csv.setVisible(false);
        
-                //arquivo = null ;
-                try {
-                    arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+    try {
+        //arquivo = null ;
+        // try {
+        arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
+    } catch (FileNotFoundException ex) {
+        Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+    }
+               // } catch (FileNotFoundException ex) {
+                //    Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+               // }
                 Arquivo_txt_task txt = new Arquivo_txt_task();
                 txt.thread_format_text();
            
@@ -175,23 +179,13 @@ public static   File arquivo;
         // TODO add your handling code here:
        salve_csv_to_db.setVisible(false);
         File arquivo = null ;
-      
-       // try {
+ 
             
-          //  arquivo = seleciona_arquivo(this,"Arquivo CSV", "csv",salve_csv_to_db,"Selecione o arquivo csv para importar !");
-//           
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        Arquivo_txt_task texto = new Arquivo_txt_task();
-      //  try {
-           
-           
-//            texto.export_csv_to_db(arquivo, salve_csv_to_db);
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+//   
+
+                Arquivo_txt_task txt = new Arquivo_txt_task();
+                 txt.thread_salva_csv_db();
+   
 
     }//GEN-LAST:event_JB_Importa_csvActionPerformed
 

@@ -8,7 +8,7 @@ CREATE TABLE registros_sisob (
      beneficio_num BIGINT(10),
      nome_falecido VARCHAR(76),
      nome_mae VARCHAR(32),
-      DN_SISOBI INT(8),
+      DN_SISOBI DATE,
       DO_SISOBI DATE,
       cpf VARCHAR(13),
       NIT BIGINT,
@@ -23,7 +23,7 @@ CREATE TABLE registros_sisob (
 );
 
 
-DROP TABLE NG39_registros;
+DROP TABLE registros;
 CREATE TABLE NG39_registros (
     id int auto_increment,
     chave VARCHAR(15),

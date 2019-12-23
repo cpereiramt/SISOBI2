@@ -24,7 +24,7 @@ try{
   con =DriverManager.getConnection(  
   "jdbc:mysql://localhost:3306/sisobi","root","root");  
  //here sisobi is database name, root is username and password  
- 
+   con.setAutoCommit(false);
  }catch(Exception e){ System.out.println(e);}  
   
 return  con;
