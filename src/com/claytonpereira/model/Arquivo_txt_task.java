@@ -62,7 +62,7 @@ public class Arquivo_txt_task {
               List<String> texto = format_txt_to_csv(arquivo);
                 int i = 0;
                 while (i < texto.size()) {
-                    TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+                   
                     publish(texto.get(i));
                     i++;
                 }
@@ -71,14 +71,13 @@ public class Arquivo_txt_task {
 
             @Override
             protected void process(List<String> pairs) {
-
-                TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
+                //TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
+                
                 TelaImportacaoSisobMensal.JL_Converter_txt.setText("Convertendo arquivo: " + arquivo.getName());
                
                  linhas = 1; 
                 TelaImportacaoSisobMensal.JL_Converter_txt.setVisible(true);
-                for (String texto : pairs) {
-                
+                for (String texto : pairs) {         
                    
                      TelaImportacaoSisobMensal.JL_Converter_txt.setText("Linha : " + linhas + " de " +  pairs.size() + " convertido");
                        TelaImportacaoSisobMensal.Converte_txt_to_csv.append( "========================================================================================================================================================================================================================= " + "\n");
@@ -112,7 +111,7 @@ public class Arquivo_txt_task {
             @Override
             protected void done() {
                 if(escolheu_arquivo){
-                JOptionPane.showMessageDialog(null, "arquivo importado com sucesso !");
+                JOptionPane.showMessageDialog(null, "arquivo convertido com sucesso !");
                }else{
                 
                 JOptionPane.showMessageDialog(null,"Erro na importação ou nenhum diretório selecionado \n para "
@@ -136,12 +135,30 @@ public class Arquivo_txt_task {
             @Override
             protected Void doInBackground() throws Exception {
                 TelaImportacaoSisobMensal tela = new TelaImportacaoSisobMensal();
-                export_csv_to_db(tela,TelaImportacaoSisobMensal.salve_csv_to_db);
-              
+                List<String> texto = export_csv_to_db(tela,TelaImportacaoSisobMensal.salve_csv_to_db);
+                int i=0;
+                while(i < texto.size()){
+                publish(texto.get(i));
+                
+                }
                 
                 return null;
             }
-
+            @Override
+            protected void process(List<String> pairs){
+            TelaImportacaoSisobMensal.salve_csv_to_db.setVisible(true);
+            
+            for(String texto : pairs){
+                TelaImportacaoSisobMensal.salve_csv_to_db.setText("Teste de inserção ....");
+                
+                
+                
+            
+            }
+            
+            
+            
+            }
            
 
         
@@ -309,71 +326,56 @@ public class Arquivo_txt_task {
            Connection conexao = con_db.database_connection();
 
             PreparedStatement statement = conexao.prepareStatement(sql);
-
+     statement.setQueryTimeout(0);
             BufferedReader lineReader = new BufferedReader(new FileReader(arquivo_escolhido));
             String lineText = null;
 
             int count = 0;
             int registro = 1;
-             
+              TelaImportacaoSisobMensal.salve_csv_to_db.setVisible(true);
             // lineReader.readLine(); // skip header line
            // mensagem.append("\n" + "Inserindo registros no banco !");
             while ((lineText = lineReader.readLine()) != null) {
               
                //mensagem.append("\n" + "=============================================================================================================" + "\n");
                 //String livro_n = lineText.split(";");
-              
+              System.out.print( registro + " = " + "processando linhas ! \n");
+              TelaImportacaoSisobMensal.salve_csv_to_db.append(registro + " = " + "processando linhas ! \n");
                 String livro_n = lineText.substring(0, 6);
-                texto.add(livro_n);
                 String folha_n = lineText.substring(7, 12);
-                  texto.add(folha_n);
                 String termo_obito_n = lineText.substring(13, 23);
-                  texto.add(termo_obito_n);
                 String data_lavr_certidao_obito = lineText.substring(24, 32);
-                  texto.add(data_lavr_certidao_obito);
                String benef_inss_n = lineText.substring(33, 43);
-                 texto.add(benef_inss_n);
                String nome_falecido = lineText.substring(44, 115);
-                 texto.add(nome_falecido);
                 //String nome_falecido_ajustado = nome_falecido.trim();               
                 String nome_mae_falecido = lineText.substring(121, 153);
-                  texto.add(nome_mae_falecido);
                 //String nome_mae_falecido_ajustado = nome_mae_falecido.trim();               
                 String data_Nascimento = lineText.substring(154, 162);
-                  texto.add(data_Nascimento);
                 String data_Obito = lineText.substring(163, 171);
-                  texto.add(data_Obito);
                String cpf = lineText.substring(172, 183);
-                 texto.add(cpf);
                 String nit = lineText.substring(185, 195);
-                  texto.add(nit);
                 String tipo_identifica_cartorio = lineText.substring(196, 197);
-                  texto.add(tipo_identifica_cartorio);
                 String Id_cartorio = lineText.substring(198, 212);
-                  texto.add(Id_cartorio);
                // String Id_cartorio_ajustado = Id_cartorio.trim();
                 String DN_SISOBI_Ajustada = lineText.substring(154, 162);
-                  texto.add(DN_SISOBI_Ajustada);
                 String nome_arquivo = arquivo_escolhido.getName();
-                  texto.add(nome_arquivo);
                String ANO_OBITO = nome_arquivo.substring(3, 7);
-                 texto.add(ANO_OBITO);
                 String MES_OBITO = nome_arquivo.substring(7, 9);
-                  texto.add(MES_OBITO);
+                  
                 String DO_SISOBI_Ajustada = lineText.substring(163, 171);
-                  texto.add(DO_SISOBI_Ajustada);
+                
                 String Nome_Arquivo_Importado = nome_arquivo;
-                  texto.add(Nome_Arquivo_Importado);
-                System.out.print("registros importados");
-              //  mensagem.append("\n" + "Registro n º" + registro + "\n");
+                 
+               
+             
 
-           System.out.print("" + "\n"
+           texto.add("" + "\n"
                         + livro_n + "\n"
                         + folha_n + "\n"
                         + termo_obito_n + "\n"
                         + data_lavr_certidao_obito + "\n"
                         + benef_inss_n + "\n"
-                     + nome_falecido + "\n"
+                     + nome_falecido + "\n" 
                         +// nome_falecido_ajustado + "\n"
                         nome_mae_falecido + "\n"
                         + //nome_mae_falecido_ajustado    + "\n"                 
@@ -413,9 +415,9 @@ public class Arquivo_txt_task {
                statement.addBatch();
                 int batchSize = 20;
 
-                if (count % batchSize == 0) {
-                   statement.executeBatch();
-                }
+//                if (count % batchSize == 0) {
+//                   statement.executeBatch();
+//                }
 
                 registro++;
             }

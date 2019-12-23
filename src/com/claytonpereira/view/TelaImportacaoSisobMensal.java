@@ -148,24 +148,11 @@ public static   File arquivo;
                // } catch (FileNotFoundException ex) {
                 //    Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
                // }
+                TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+                 TelaImportacaoSisobMensal.Converte_txt_to_csv.append("Convertendo arquivo para CSV .......... Aguarde ! \n"); 
                 Arquivo_txt_task txt = new Arquivo_txt_task();
                 txt.thread_format_text();
            
-       
-        
-        
-//            try {
-//             
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//           
-//        } catch (IOException ex) {
-//            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//       
-//                
-   
 
           
       
