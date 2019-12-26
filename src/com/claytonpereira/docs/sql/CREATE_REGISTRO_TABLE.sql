@@ -1,5 +1,5 @@
 DROP TABLE registros_sisob;
-CREATE TABLE registros_sisob (
+CREATE TABLE registrosSisob (
 
     livroNum VARCHAR(6),
 	folhaNum VARCHAR(5),
@@ -24,25 +24,25 @@ CREATE TABLE registros_sisob (
 
 
 DROP TABLE registros;
-CREATE TABLE NG39_registros (
+CREATE TABLE registrosSeap (
     id int auto_increment,
     chave VARCHAR(15),
-    tipovinc_ajustado VARCHAR(25),
-    ref_folha TIMESTAMP,
-    num_folha INT(2),
+    tipovincajustado VARCHAR(25),
+    reffolha TIMESTAMP,
+    numfolha INT(2),
     tipovinc VARCHAR(20),
     nomeorgao VARCHAR(100),
     municipio VARCHAR(70),
     unidade INT(7),
-    desc_unid VARCHAR(60),
+    descunid VARCHAR(60),
     numfunc INT(7),
     numvinc INT(2),
     numpens INT,
     nome VARCHAR(255),
 	cpf  VARCHAR(13) ,
     categoria VARCHAR(70),
-    desc_cargo VARCHAR(255),
-    desc_funcao VARCHAR(255),
+    desccargo VARCHAR(255),
+    descfuncao VARCHAR(255),
     especialidade VARCHAR(80),
     referencia VARCHAR(8),
     jornada VARCHAR(3),
@@ -52,16 +52,34 @@ CREATE TABLE NG39_registros (
     DTNASC DATE,
     DTNASC_AJUSTADA DATE,
     idade INT(3),
-    faixa_idade VARCHAR(250),
-    vl_bruto DECIMAL(13,4),
-	faixa_remuneracao_bruta VARCHAR(255),
+    faixaidade VARCHAR(250),
+    vlbruto DECIMAL(13,4),
+	faixaremuneracao_bruta VARCHAR(255),
     vldesc DECIMAL(13,4),
     subsidio DECIMAL(13,4),
     tipoevento VARCHAR(255),
     formaprov VARCHAR(30),
-    VALOR_AUX1 DECIMAL(13,4),
-    VALOR_AUX2 DECIMAL(13,4),
-    FLEX_CAMPO_01_sexo VARCHAR(2),   
-    Nome_Arquivo_importado VARCHAR(255),
+    VALORAUX1 DECIMAL(13,4),
+    VALORAUX2 DECIMAL(13,4),
+    FLEXCAMPO01sexo VARCHAR(2),   
+    NomeArquivoimportado VARCHAR(255),
     PRIMARY KEY (id)
 );
+
+
+DROP TABLE registroETurmalina;
+CREATE TABLE registroETurmalina (
+    id int auto_increment,
+   dataFalecimento DATE,
+  dataIngressoServicoPublico DATE,
+  dataNascimento DATE,
+  estadoCivil INT,
+  nome VARCHAR(255),
+  nomeMae VARCHAR(255),
+  nomePai VARCHAR(255),
+  sexo VARCHAR(255) ,
+  numeroCPF VARCHAR(13) ,
+    PRIMARY KEY (id)
+);
+
+

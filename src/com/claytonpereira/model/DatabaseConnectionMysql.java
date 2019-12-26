@@ -36,8 +36,7 @@ try{
     
  database_connection(); 
  Statement stmt = con.createStatement();  
- rs = stmt.executeQuery("select registros_sisob.NomeArquivoImportado, "
-         + "count(*) numero_registros from registros_sisob\n" +
+ rs = stmt.executeQuery("select registros_sisob.NomeArquivoImportado as `Nome Do Arquivo`, count(*)   `Numero de Registros por arquivo` from registros_sisob\n" +
 " group by registros_sisob.NomeArquivoImportado");  
 //while(rs.next())  {
 ////System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
