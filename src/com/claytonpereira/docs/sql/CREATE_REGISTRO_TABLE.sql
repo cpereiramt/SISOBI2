@@ -1,25 +1,25 @@
 DROP TABLE registros_sisob;
 CREATE TABLE registros_sisob (
 
-    livro_num VARCHAR(6),
-	folha_num VARCHAR(5),
-	termo_num VARCHAR(10),
-     data_lavratura DATE,
-     beneficio_num BIGINT(10),
-     nome_falecido VARCHAR(76),
-     nome_mae VARCHAR(32),
-      DN_SISOBI DATE,
-      DO_SISOBI DATE,
+    livroNum VARCHAR(6),
+	folhaNum VARCHAR(5),
+	termoNum VARCHAR(10),
+     dataLavratura DATE,
+     beneficioNum BIGINT(10),
+     nomeFalecido VARCHAR(76),
+     nomeMae VARCHAR(32),
+      DNSISOBI DATE,
+      DOSISOBI DATE,
       cpf VARCHAR(13),
       NIT BIGINT,
-	  Tipo_id_cartorio INT(1),
-	  cartorio_id BIGINT(14),      
-      DN_SISOBI_Ajustada VARCHAR(10),    
-      ANO_OBITO INT(4),
-      MES_OBITO INT(2),
-      DO_SISOBI_Ajustada VARCHAR(10),
-      Nome_Arquivo_Importado VARCHAR(255),
-      PRIMARY KEY (livro_num,folha_num,nome_falecido,nome_mae,MES_OBITO)
+	  TipoIdCartorio INT(1),
+	  cartorioId BIGINT(14),      
+      DNSISOBIAjustada VARCHAR(10),    
+      ANOOBITO INT(4),
+      MESOBITO INT(2),
+      DOSISOBIAjustada VARCHAR(10),
+      NomeArquivoImportado VARCHAR(255),
+      PRIMARY KEY (livroNum,folhaNum,nomeFalecido,nomeMae,MESOBITO)
 );
 
 
