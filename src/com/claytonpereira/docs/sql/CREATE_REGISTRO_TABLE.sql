@@ -66,10 +66,10 @@ CREATE TABLE registrosSeap (
     PRIMARY KEY (id)
 );
 
-
 DROP TABLE registroETurmalina;
 CREATE TABLE registroETurmalina (
     id int auto_increment,
+    operacao VARCHAR(5),
    dataFalecimento DATE,
   dataIngressoServicoPublico DATE,
   dataNascimento DATE,
@@ -78,8 +78,8 @@ CREATE TABLE registroETurmalina (
   nomeMae VARCHAR(255),
   nomePai VARCHAR(255),
   sexo VARCHAR(255) ,
-  numeroCPF VARCHAR(13) ,
-    PRIMARY KEY (id)
+  numeroCPF VARCHAR(13), 
+  PRIMARY KEY (id)
 );
 
 
