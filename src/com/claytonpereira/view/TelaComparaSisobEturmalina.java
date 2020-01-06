@@ -125,11 +125,15 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
         try {
             ResultSet resultado =     db_connection.join_registro_sisob_eturmalina(mes_selected,ano_selected);
                 
-                int i = 0;
+                int i = 1;
             while(resultado.next()){
       
             JOptionPane.showMessageDialog(null,resultado.getInt(i) + " linha=  " + i );
-            
+           /** configurar o retorno rs para cada coluna da tabela como o 
+           **  exemplo : (rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
+           **  pois está dando o erro 
+           **  java.sql.SQLException: Invalid value for getInt() - 'MARIA IZAMI PEREIRA CAMPOS' 
+             */
             i++;
     
     }
