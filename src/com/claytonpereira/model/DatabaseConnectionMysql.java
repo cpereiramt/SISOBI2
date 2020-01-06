@@ -11,6 +11,7 @@ package com.claytonpereira.model;
 import java.sql.*;  
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 
@@ -31,7 +32,7 @@ return  con;
 }
 
 
-public java.sql.ResultSet consulta_db(){
+public java.sql.ResultSet count_registros_por_arquivo(){
 try{
     
  database_connection(); 
@@ -46,6 +47,31 @@ try{
         return rs;
 }  
 
+
+public java.sql.ResultSet join_registro_sisob_eturmalina(int MES, int ANO) throws SQLException{
+    
+    System.out.println("select  b.nome, b.numeroCPF, a.MESOBITO, a.ANOOBITO from registrosSisob a \n" +
+"       inner join  registroETurmalina b on  b.numeroCPF = a.cpf \n" +
+"       where  b.nome = a.nomeFalecido\n" +
+"       and a.ANOOBITO = " +  "\"" + ANO + "\" \n" +
+"       and a.MESOBITO = " +  "\"" + MES + "\"; ");
+    
+    database_connection();
+    Statement stmt = con.createStatement();
+    rs = stmt.executeQuery("select  b.nome, b.numeroCPF, a.MESOBITO, a.ANOOBITO from registrosSisob a \n" +
+"       inner join  registroETurmalina b on  b.numeroCPF = a.cpf \n" +
+"       where  b.nome = a.nomeFalecido\n" +
+"       and a.ANOOBITO = " +  "\"" + ANO + "\" \n" +
+"       and a.MESOBITO = " +  "\"" + MES + "\"; ");
+
+    
+    
+     return rs;
+
+
+
+
+}
 
 }  
 

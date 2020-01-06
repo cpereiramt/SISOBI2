@@ -1,3 +1,5 @@
+
+CREATE DATABASE SISOB;
 DROP TABLE registrosSisob;
 CREATE TABLE registrosSisob (
 
@@ -79,7 +81,7 @@ CREATE TABLE registroETurmalina (
   nomePai VARCHAR(255),
   sexo VARCHAR(255) ,
   numeroCPF VARCHAR(13), 
-  PRIMARY KEY (id)
+  PRIMARY KEY (id,nome,numeroCPF)
 );
 
 

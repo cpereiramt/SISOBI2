@@ -33,12 +33,13 @@ public class TelaInicial extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        exitMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        Menu_Arquivo = new javax.swing.JMenu();
+        Menu_sair = new javax.swing.JMenuItem();
+        Menu_importacao = new javax.swing.JMenu();
+        Menu_importar_sisob = new javax.swing.JMenuItem();
         Registros = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        Menu_conta_reg_sisob = new javax.swing.JMenuItem();
+        Menu_sisob_eturmalina = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
@@ -49,46 +50,54 @@ public class TelaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("Arquivo");
+        Menu_Arquivo.setMnemonic('f');
+        Menu_Arquivo.setText("Arquivo");
 
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Sair");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        Menu_sair.setMnemonic('x');
+        Menu_sair.setText("Sair");
+        Menu_sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                Menu_sairActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        Menu_Arquivo.add(Menu_sair);
 
-        menuBar.add(fileMenu);
+        menuBar.add(Menu_Arquivo);
 
-        jMenu2.setText("Importação");
+        Menu_importacao.setText("Importação");
 
-        jMenuItem2.setText("Importar arquivo Sisob Mensal");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        Menu_importar_sisob.setText("Importar arquivo Sisob Mensal");
+        Menu_importar_sisob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                Menu_importar_sisobActionPerformed(evt);
             }
         });
-        jMenuItem2.addKeyListener(new java.awt.event.KeyAdapter() {
+        Menu_importar_sisob.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jMenuItem2KeyPressed(evt);
+                Menu_importar_sisobKeyPressed(evt);
             }
         });
-        jMenu2.add(jMenuItem2);
+        Menu_importacao.add(Menu_importar_sisob);
 
-        menuBar.add(jMenu2);
+        menuBar.add(Menu_importacao);
 
-        Registros.setText("Registros");
+        Registros.setText("Relatórios");
 
-        jMenuItem1.setText("Sisob");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        Menu_conta_reg_sisob.setText("Quantidade  Reg Sisob");
+        Menu_conta_reg_sisob.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                Menu_conta_reg_sisobActionPerformed(evt);
             }
         });
-        Registros.add(jMenuItem1);
+        Registros.add(Menu_conta_reg_sisob);
+
+        Menu_sisob_eturmalina.setText("Sisob x E-TURMALINA");
+        Menu_sisob_eturmalina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Menu_sisob_eturmalinaActionPerformed(evt);
+            }
+        });
+        Registros.add(Menu_sisob_eturmalina);
 
         menuBar.add(Registros);
 
@@ -97,25 +106,31 @@ public class TelaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+    private void Menu_sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_sairActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
+    }//GEN-LAST:event_Menu_sairActionPerformed
 
-    private void jMenuItem2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jMenuItem2KeyPressed
+    private void Menu_importar_sisobKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Menu_importar_sisobKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2KeyPressed
+    }//GEN-LAST:event_Menu_importar_sisobKeyPressed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void Menu_importar_sisobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_importar_sisobActionPerformed
         // TODO add your handling code here:
         TelaImportacaoSisobMensal sisob_mensal =  new TelaImportacaoSisobMensal();
         sisob_mensal.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_Menu_importar_sisobActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void Menu_conta_reg_sisobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_conta_reg_sisobActionPerformed
         // TODO add your handling code here:
           TelaSisobCount sisob_count =  new TelaSisobCount();
           sisob_count.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_Menu_conta_reg_sisobActionPerformed
+
+    private void Menu_sisob_eturmalinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Menu_sisob_eturmalinaActionPerformed
+        // TODO add your handling code here:
+         TelaComparaSisobEturmalina sisob_Eturmalina =  new TelaComparaSisobEturmalina();
+          sisob_Eturmalina.setVisible(true);
+    }//GEN-LAST:event_Menu_sisob_eturmalinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,14 +170,15 @@ public class TelaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Menu_Arquivo;
+    private javax.swing.JMenuItem Menu_conta_reg_sisob;
+    private javax.swing.JMenu Menu_importacao;
+    private javax.swing.JMenuItem Menu_importar_sisob;
+    private javax.swing.JMenuItem Menu_sair;
+    private javax.swing.JMenuItem Menu_sisob_eturmalina;
     private javax.swing.JMenu Registros;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables

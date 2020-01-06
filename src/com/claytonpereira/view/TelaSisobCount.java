@@ -43,7 +43,7 @@ public class TelaSisobCount extends javax.swing.JFrame {
     public void carrega_registros(){
     
      DatabaseConnectionMysql conexao = new DatabaseConnectionMysql();
-         ResultSet resultado = conexao.consulta_db();
+         ResultSet resultado = conexao.count_registros_por_arquivo();
          DefaultTableModel model =(DefaultTableModel) jTable1.getModel();
          model.setNumRows(0);
  

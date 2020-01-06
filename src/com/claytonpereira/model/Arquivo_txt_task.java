@@ -400,8 +400,8 @@ public class Arquivo_txt_task {
                 statement.setString(3, termo_obito_n);
                 statement.setString(4, data_lavr_certidao_obito);
                 statement.setString(5, benef_inss_n);
-                statement.setString(6, nome_falecido);
-               statement.setString(7, nome_mae_falecido);
+                statement.setString(6, nome_falecido.trim());
+               statement.setString(7, nome_mae_falecido.trim());
                 statement.setString(8, data_Nascimento);
                 statement.setString(9, data_Obito);
                 statement.setString(10, cpf);
