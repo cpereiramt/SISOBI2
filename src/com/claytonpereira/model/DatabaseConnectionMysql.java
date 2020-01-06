@@ -22,7 +22,7 @@ public Connection database_connection(){
 try{  
   Class.forName("com.mysql.jdbc.Driver");  
   con =DriverManager.getConnection(  
-  "jdbc:mysql://localhost:3307/sisob_db","root","cl123456");  
+  "jdbc:mysql://localhost:3306/sisobi","root","root");  
  //here sisobi is database name, root is username and password  
    //con.setAutoCommit(false);
  }catch(Exception e){ System.out.println(e);}  

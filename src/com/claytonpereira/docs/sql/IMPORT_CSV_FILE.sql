@@ -1,4 +1,4 @@
-LOAD xml INFILE 'C:/ProgramData/MySQL/MySQL Server 5.7/Uploads/arquivoSiprev_convertido.xml' 
+LOAD xml INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/arquivoSiprev_convertido.xml' 
 INTO TABLE registroETurmalina
 ROWS IDENTIFIED BY '<servidores>';
 
