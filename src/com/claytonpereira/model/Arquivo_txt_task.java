@@ -286,7 +286,7 @@ public class Arquivo_txt_task {
                          mensagem.setVisible(true);
                           mensagem.setText("Processando arquivo" );
                              
-                             String sql = "INSERT INTO registros_sisob ("
+                             String sql = "INSERT IGNORE INTO registrosSisob ("
                + "livroNum,"
                + "folhaNum,"
                + "termoNum,"
@@ -342,7 +342,7 @@ public class Arquivo_txt_task {
               
                //mensagem.append("\n" + "=============================================================================================================" + "\n");
                 //String livro_n = lineText.split(";");
-              System.out.print( registro + " = " + "processando linhas ! \n");
+             // System.out.print( registro + " = " + "processando linhas ! \n");
 
                 String livro_n = lineText.substring(0, 6);
                 String folha_n = lineText.substring(7, 12);
@@ -394,7 +394,7 @@ public class Arquivo_txt_task {
                         + DO_SISOBI_Ajustada + "\n"
                         + Nome_Arquivo_Importado);
 
-                 System.out.println("rodou statement");
+               //  System.out.println("rodou statement");
                 statement.setString(1, livro_n);
                 statement.setString(2, folha_n);
                 statement.setString(3, termo_obito_n);
@@ -418,15 +418,15 @@ public class Arquivo_txt_task {
                statement.addBatch();
                 int batchSize = 20;
 
-//                if (count % batchSize == 0) {
-//                   statement.executeBatch();
-//                }
+              if (count % batchSize == 0) {
+                statement.executeBatch();
+             }
 
                 registro++;
             }
 
             lineReader.close();
-    System.out.println("Executou statement");
+  //  System.out.println("Executou statement");
             // execute the remaining queries
            statement.executeBatch();
            

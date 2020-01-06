@@ -1,4 +1,4 @@
-DROP TABLE registros_sisob;
+DROP TABLE registrosSisob;
 CREATE TABLE registrosSisob (
 
     livroNum VARCHAR(6),

@@ -22,9 +22,9 @@ public Connection database_connection(){
 try{  
   Class.forName("com.mysql.jdbc.Driver");  
   con =DriverManager.getConnection(  
-  "jdbc:mysql://localhost:3306/sisobi","root","root");  
+  "jdbc:mysql://localhost:3307/sisob_db","root","cl123456");  
  //here sisobi is database name, root is username and password  
-   con.setAutoCommit(false);
+   //con.setAutoCommit(false);
  }catch(Exception e){ System.out.println(e);}  
   
 return  con;
@@ -36,8 +36,8 @@ try{
     
  database_connection(); 
  Statement stmt = con.createStatement();  
- rs = stmt.executeQuery("select registros_sisob.NomeArquivoImportado as `Nome Do Arquivo`, count(*)   `Numero de Registros por arquivo` from registros_sisob\n" +
-" group by registros_sisob.NomeArquivoImportado");  
+ rs = stmt.executeQuery("select registrosSisob.NomeArquivoImportado as `Nome Do Arquivo`, count(*)   `Numero de Registros por arquivo` from registrosSisob\n" +
+" group by registrosSisob.NomeArquivoImportado");  
 //while(rs.next())  {
 ////System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));  
 //// con.close(); } 
