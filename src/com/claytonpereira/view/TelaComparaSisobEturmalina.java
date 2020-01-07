@@ -131,7 +131,7 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
             System.out.print(resultado.getString(1) +  "  "  
             + resultado.getString(2) +  "  " 
                      + resultado.getInt(3) +  "  " 
-                    + resultado.getInt(4) +  "  " 
+                    + resultado.getInt(4) +  "  "  + "\n"
             
             );
            /** configurar o retorno rs para cada coluna da tabela como o 
