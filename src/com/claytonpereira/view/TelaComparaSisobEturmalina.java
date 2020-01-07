@@ -128,7 +128,12 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
                 int i = 1;
             while(resultado.next()){
       
-            JOptionPane.showMessageDialog(null,resultado.getInt(i) + " linha=  " + i );
+            System.out.print(resultado.getString(1) +  "  "  
+            + resultado.getString(2) +  "  " 
+                     + resultado.getInt(3) +  "  " 
+                    + resultado.getInt(4) +  "  " 
+            
+            );
            /** configurar o retorno rs para cada coluna da tabela como o 
            **  exemplo : (rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
            **  pois está dando o erro 

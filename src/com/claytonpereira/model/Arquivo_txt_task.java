@@ -141,7 +141,7 @@ public class Arquivo_txt_task {
                 while(i < texto.size()){
                 publish(texto.get(i));
                   }
-                
+                Thread.sleep(1);
                 return null;
             }
             @Override
@@ -159,7 +159,19 @@ public class Arquivo_txt_task {
             
             
             }
+            
+             @Override
+            protected void done() {
+                try {
+                    this.wait();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            JOptionPane.showMessageDialog(null, "arquivo salvo com sucesso no banco de dados  !");
+            }
            
+            
+            
 
         
         };
@@ -432,7 +444,7 @@ public class Arquivo_txt_task {
            
             
 
-           conexao.commit();
+           //conexao.commit();
 
             conexao.close();
 
