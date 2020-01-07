@@ -6,6 +6,9 @@
 package com.claytonpereira.view;
 
 import com.claytonpereira.model.DatabaseConnectionMysql;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,6 +17,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import rst.pdfbox.layout.elements.Document;
+import rst.pdfbox.layout.elements.Paragraph;
+import rst.pdfbox.layout.text.Constants;
 
 /**
  *
@@ -115,41 +125,102 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-        System.out.print("O MES SELECIONADO FOI " + SPINNER_MES.getValue() + ""
-                + " O ANO SELECIONADO FOI " + SPINNER_ANO.getValue() + "\n");
-        DatabaseConnectionMysql db_connection = new DatabaseConnectionMysql();
-        int mes_selected = (int) SPINNER_MES.getValue();
-        int ano_selected = (int) SPINNER_ANO.getValue();
         try {
-            ResultSet resultado =     db_connection.join_registro_sisob_eturmalina(mes_selected,ano_selected);
-                
-                int i = 1;
-            while(resultado.next()){
-      
-            System.out.print(resultado.getString(1) +  "  "  
-            + resultado.getString(2) +  "  " 
-                     + resultado.getInt(3) +  "  " 
-                    + resultado.getInt(4) +  "  "  + "\n"
+            // TODO add your handling code here:
             
-            );
-           /** configurar o retorno rs para cada coluna da tabela como o 
-           **  exemplo : (rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
-           **  pois está dando o erro 
-           **  java.sql.SQLException: Invalid value for getInt() - 'MARIA IZAMI PEREIRA CAMPOS' 
-             */
-            i++;
-    
-    }
-        
-        
-        } catch (SQLException ex) {
+            gerarPDF();
+            
+//
+//        System.out.print("O MES SELECIONADO FOI " + SPINNER_MES.getValue() + ""
+//                + " O ANO SELECIONADO FOI " + SPINNER_ANO.getValue() + "\n");
+//        DatabaseConnectionMysql db_connection = new DatabaseConnectionMysql();
+//        int mes_selected = (int) SPINNER_MES.getValue();
+//        int ano_selected = (int) SPINNER_ANO.getValue();
+//        try {
+//            ResultSet resultado =     db_connection.join_registro_sisob_eturmalina(mes_selected,ano_selected);
+//                
+//                int i = 1;
+//            while(resultado.next()){
+//
+//            System.out.print(resultado.getString(1) +  "  "
+//            + resultado.getString(2) +  "  "
+//                     + resultado.getInt(3) +  "  " 
+//                    + resultado.getInt(4) +  "  "  + "\n"
+//            
+//            );
+//           /** configurar o retorno rs para cada coluna da tabela como o 
+//           **  exemplo : (rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
+//           **  pois está dando o erro
+//           **  java.sql.SQLException: Invalid value for getInt() - 'MARIA IZAMI PEREIRA CAMPOS' 
+//             */
+//            i++;
+//    
+//    }
+//
+//        
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        } catch (IOException ex) {
             Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
+    
+     public void gerarPDF() throws IOException{
+        /*int fontSize = 14 ;
+      float leading = 1.5f * fontSize;
+        try (PDDocument document = new PDDocument()) {
+            document.addPage(new PDPage());
+            document.save("C:\\Users\\claytonpereira\\Downloads\\relatorio.pdf");
+            PDPageContentStream content = new PDPageContentStream(document,document.getPage(0));
+            System.out.println("PDF created");
+                  //Begin the Content stream 
+      content.beginText();        
+      //Setting the font to the Content stream  
+      content.setFont(PDType1Font.TIMES_ROMAN, 12);
+      //Setting the position for the line 
+      content.newLineAtOffset(25, 500);    
+      content.setLeading(14.5f);
+      //Adding text in the form of string 
+        String text = "This is the sample document and we are adding content to it." + "<br>"
+              ;
+      content.showText(text);     
+      content.newLine();
+
+      
+      
+      //Ending the content stream
+      content.endText();
+
+      System.out.println("Content added");
+
+      //Closing the content stream
+      content.close();
+       
+      document.save("C:\\Users\\claytonpereira\\Downloads\\relatorio.pdf");
+        }
+     
+     
+     **/
+        
+     Document  document = new Document(Constants.A4, 40, 60, 40, 60);
+ 
+      Paragraph paragraph = new Paragraph();
+        paragraph.addText("Hello Document\n", 20, PDType1Font.HELVETICA);
+        document.add(paragraph);
+        document.add(paragraph);
+        document.add(paragraph);
+
+ 
+         final OutputStream outputStream = 
+          new FileOutputStream("hellodoc.pdf");
+         document.save(outputStream); 
+     
+     
+     }
     /**
      * @param args the command line arguments
      */
