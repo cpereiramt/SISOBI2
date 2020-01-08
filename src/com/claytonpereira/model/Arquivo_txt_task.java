@@ -141,7 +141,7 @@ public class Arquivo_txt_task {
                 while(i < texto.size()){
                 publish(texto.get(i));
                   }
-                Thread.sleep(1);
+               // Thread.sleep(1);
                 return null;
             }
             @Override

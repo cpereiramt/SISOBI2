@@ -37,7 +37,8 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
     public TelaComparaSisobEturmalina() {
  
         initComponents();
-        
+         setSize(800,600);
+        setExtendedState(MAXIMIZED_BOTH);
        
     }
 
@@ -61,7 +62,7 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(SPINNER_ANO,"0000");
         SPINNER_ANO.setEditor(editor);
@@ -163,57 +164,33 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
 //        }
         } catch (IOException ex) {
             Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
         }
     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
-     public void gerarPDF() throws IOException{
-        /*int fontSize = 14 ;
-      float leading = 1.5f * fontSize;
-        try (PDDocument document = new PDDocument()) {
-            document.addPage(new PDPage());
-            document.save("C:\\Users\\claytonpereira\\Downloads\\relatorio.pdf");
-            PDPageContentStream content = new PDPageContentStream(document,document.getPage(0));
-            System.out.println("PDF created");
-                  //Begin the Content stream 
-      content.beginText();        
-      //Setting the font to the Content stream  
-      content.setFont(PDType1Font.TIMES_ROMAN, 12);
-      //Setting the position for the line 
-      content.newLineAtOffset(25, 500);    
-      content.setLeading(14.5f);
-      //Adding text in the form of string 
-        String text = "This is the sample document and we are adding content to it." + "<br>"
-              ;
-      content.showText(text);     
-      content.newLine();
-
-      
-      
-      //Ending the content stream
-      content.endText();
-
-      System.out.println("Content added");
-
-      //Closing the content stream
-      content.close();
-       
-      document.save("C:\\Users\\claytonpereira\\Downloads\\relatorio.pdf");
-        }
-     
-     
-     **/
+     public void gerarPDF() throws IOException, SQLException{
+    
+         DatabaseConnectionMysql dados_retornados = new DatabaseConnectionMysql();
+         int mes = (int) SPINNER_MES.getValue();
+         int ano = (int) SPINNER_ANO.getValue();
+         ResultSet resultado = dados_retornados.join_registro_sisob_eturmalina(mes, ano);
         
      Document  document = new Document(Constants.A4, 40, 60, 40, 60);
- 
-      Paragraph paragraph = new Paragraph();
-        paragraph.addText("Hello Document\n", 20, PDType1Font.HELVETICA);
-        document.add(paragraph);
-        document.add(paragraph);
-        document.add(paragraph);
-
+      while(resultado.next()){
+      Paragraph conteudo_sql = new Paragraph();
+      conteudo_sql.addText(resultado.getString(1) + "|| " + resultado.getString(2) + "|| " + 
+              resultado.getInt(3) + "|| " +  resultado.getInt(4) + "\n", 15, PDType1Font.COURIER );
+      
+        document.add(conteudo_sql);
+      
+      
+      }
+     
+        
  
          final OutputStream outputStream = 
           new FileOutputStream("hellodoc.pdf");

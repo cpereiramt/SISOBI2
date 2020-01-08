@@ -59,6 +59,7 @@ public static   File arquivo;
         jScrollPane2 = new javax.swing.JScrollPane();
         salve_csv_to_db = new javax.swing.JTextArea();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
 
         JB_Converte_txt.setText("Converter TXT para CSV");

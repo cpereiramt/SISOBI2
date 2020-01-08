@@ -1,5 +1,6 @@
 
 CREATE DATABASE SISOB;
+
 DROP TABLE registrosSisob;
 CREATE TABLE registrosSisob (
 
@@ -23,6 +24,23 @@ CREATE TABLE registrosSisob (
       NomeArquivoImportado VARCHAR(255),
       PRIMARY KEY (livroNum,folhaNum,nomeFalecido,nomeMae,MESOBITO)
 );
+
+DROP TABLE registroETurmalina;
+CREATE TABLE registroETurmalina (
+    id int auto_increment,
+    operacao VARCHAR(5),
+   dataFalecimento DATE,
+  dataIngressoServicoPublico DATE,
+  dataNascimento DATE,
+  estadoCivil INT,
+  nome VARCHAR(255),
+  nomeMae VARCHAR(255),
+  nomePai VARCHAR(255),
+  sexo VARCHAR(255) ,
+  numeroCPF VARCHAR(13), 
+  PRIMARY KEY (id,nome,numeroCPF)
+);
+
 
 
 DROP TABLE registros;
@@ -68,20 +86,5 @@ CREATE TABLE registrosSeap (
     PRIMARY KEY (id)
 );
 
-DROP TABLE registroETurmalina;
-CREATE TABLE registroETurmalina (
-    id int auto_increment,
-    operacao VARCHAR(5),
-   dataFalecimento DATE,
-  dataIngressoServicoPublico DATE,
-  dataNascimento DATE,
-  estadoCivil INT,
-  nome VARCHAR(255),
-  nomeMae VARCHAR(255),
-  nomePai VARCHAR(255),
-  sexo VARCHAR(255) ,
-  numeroCPF VARCHAR(13), 
-  PRIMARY KEY (id,nome,numeroCPF)
-);
 
 

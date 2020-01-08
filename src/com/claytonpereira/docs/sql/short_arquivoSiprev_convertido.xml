@@ -10739,4 +10739,70 @@
 <numeroCPF>17606012172</numeroCPF>
 </servidores>
 
+<servidores>
+<operacao>I</operacao>
+<dataFalecimento></dataFalecimento>
+<dataIngressoServicoPublico>2019-06-15</dataIngressoServicoPublico>
+<dataNascimento>1957-01-06</dataNascimento>
+<estadoCivil>4</estadoCivil>
+<nome>JOSE BARRETO DE OLIVEIRA</nome>
+<nomeMae>BELMIRA ALVES DE MATOS</nomeMae>
+<nomePai></nomePai>
+<sexo>M</sexo>
+<numeroCPF>09702229553</numeroCPF>
+</servidores>
+
+
+<servidores>
+<operacao>I</operacao>
+<dataFalecimento></dataFalecimento>
+<dataIngressoServicoPublico>2002-04-02</dataIngressoServicoPublico>
+<dataNascimento>1957-01-06</dataNascimento>
+<estadoCivil>4</estadoCivil>
+<nome>SILVIO FERREIRA DOS SANTOS</nome>
+<nomeMae>JOANA MADALENA DOS ANJOS</nomeMae>
+<nomePai></nomePai>
+<sexo>M</sexo>
+<numeroCPF>07265571533</numeroCPF>
+</servidores>
+
+<servidores>
+<operacao>I</operacao>
+<dataFalecimento></dataFalecimento>
+<dataIngressoServicoPublico>1998-06-02</dataIngressoServicoPublico>
+<dataNascimento>1958-01-10</dataNascimento>
+<estadoCivil>4</estadoCivil>
+<nome>EULINA DA CRUZ NASCIMENTO</nome>
+<nomeMae>MARIA CUSTODIA DA CRUZ</nomeMae>
+<nomePai></nomePai>
+<sexo>F</sexo>
+<numeroCPF>62861220520</numeroCPF>
+</servidores>
+
+<servidores>
+<operacao>I</operacao>
+<dataFalecimento></dataFalecimento>
+<dataIngressoServicoPublico>2000-06-02</dataIngressoServicoPublico>
+<dataNascimento>1957-01-06</dataNascimento>
+<estadoCivil>4</estadoCivil>
+<nome>JOAO FERREIRA LIMA</nome>
+<nomeMae>MARGARIDA LUCIANA DE JESUS</nomeMae>
+<nomePai></nomePai>
+<sexo>M</sexo>
+<numeroCPF>06548877802</numeroCPF>
+</servidores>
+
+<servidores>
+<operacao>I</operacao>
+<dataFalecimento></dataFalecimento>
+<dataIngressoServicoPublico>2000-06-02</dataIngressoServicoPublico>
+<dataNascimento>1957-01-06</dataNascimento>
+<estadoCivil>4</estadoCivil>
+<nome>JOSE GONZAGA DE SOUZA</nome>
+<nomeMae>MARIA JOSE DE JESUS</nomeMae>
+<nomePai></nomePai>
+<sexo>M</sexo>
+<numeroCPF>02383765597</numeroCPF>
+</servidores>
+
 </registros_seap>
