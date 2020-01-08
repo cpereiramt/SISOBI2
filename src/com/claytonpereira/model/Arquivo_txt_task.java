@@ -162,7 +162,8 @@ public class Arquivo_txt_task {
 
             @Override
             protected void process(List<String> pairs) {
-              
+              TelaImportacaoSisobMensal.salve_csv_to_db.setText("Salvando arquivo no Banco de dados !");
+
                     int i = 0;
                 for (String texto : pairs) {
                 TelaImportacaoSisobMensal.salve_csv_to_db.append("exportando linha " + i + "para o banco de dados .....");
@@ -174,7 +175,7 @@ public class Arquivo_txt_task {
             @Override
             protected void done() {
                 
-                 this.cancel(true);
+                 
                 JOptionPane.showMessageDialog(null, "arquivo salvo com sucesso no banco de dados  !");
             }
 
