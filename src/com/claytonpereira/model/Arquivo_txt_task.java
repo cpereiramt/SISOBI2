@@ -162,11 +162,11 @@ public class Arquivo_txt_task {
 
             @Override
             protected void process(List<String> pairs) {
-              TelaImportacaoSisobMensal.salve_csv_to_db.setText("Salvando arquivo no Banco de dados !");
+              TelaImportacaoSisobMensal.salve_csv_to_db.setText("Salvando arquivo no Banco de dados ! \n ");
 
                     int i = 0;
                 for (String texto : pairs) {
-                TelaImportacaoSisobMensal.salve_csv_to_db.append("exportando linha " + i + "para o banco de dados .....");
+                TelaImportacaoSisobMensal.salve_csv_to_db.append("exportando linha " + texto + "para o banco de dados ..... \n");
                 i++;
                 }
 
@@ -177,6 +177,7 @@ public class Arquivo_txt_task {
                 
                  
                 JOptionPane.showMessageDialog(null, "arquivo salvo com sucesso no banco de dados  !");
+               TelaImportacaoSisobMensal.salve_csv_to_db.append("Arquivo salvo com sucesso no banco de dados !");
             }
 
         };
@@ -318,8 +319,7 @@ public class Arquivo_txt_task {
         Vector texto = new Vector(8, 3);
         TelaImportacaoSisobMensal telaSisob = new TelaImportacaoSisobMensal();
         File arquivo_escolhido = telaSisob.seleciona_arquivo(tela, "arquivo CSV", "csv", TelaImportacaoSisobMensal.salve_csv_to_db, "Selecione o arquivo CSV para ser importado no banco de dados !");
-        mensagem.setVisible(true);
-        mensagem.setText("Processando arquivo");
+       
 
         String sql = "INSERT IGNORE INTO registrosSisob ("
                 + "livroNum,"

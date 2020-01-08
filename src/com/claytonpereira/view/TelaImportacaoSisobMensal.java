@@ -171,7 +171,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         salve_csv_to_db.setVisible(false);
         File arquivo = null;
        salve_csv_to_db.setVisible(true);
-        salve_csv_to_db.append("Salvando conteudo do arquivo CSV no Banco De Dados .......... Aguarde! " );
+        salve_csv_to_db.append("Salvando conteudo do arquivo CSV no Banco De Dados .......... Aguarde! \n" );
         Arquivo_txt_task txt = new Arquivo_txt_task();
         txt.thread_salva_csv_db();
 
