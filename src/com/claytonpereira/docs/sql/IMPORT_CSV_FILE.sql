@@ -1,3 +1,8 @@
+
+/*
+Carrega os arquivos XML  
+*/
+
 LOAD xml INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/short_arquivoSiprev_convertido.xml' 
 INTO TABLE registroETurmalina
 ROWS IDENTIFIED BY '<servidores>';

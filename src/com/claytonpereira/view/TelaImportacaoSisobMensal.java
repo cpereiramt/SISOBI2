@@ -21,12 +21,18 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- *
+ * Tela para conversão de arquivos txt em csv e exportação para o banco de dados.
  * @author claytonpereira
  */
 public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
-public static JFileChooser selecionaarquivo; 
-public static   File arquivo;
+    /** JFileChooser para seleção de arquivos .
+     */
+    public static JFileChooser selecionaarquivo;
+    
+     /** Usando a classe File do pacote padrão do java para manipular os arquivos no sistema .
+     */
+    public static File arquivo;
+
     /**
      * Creates new form TelaImportacaoSisobMensal
      */
@@ -35,10 +41,10 @@ public static   File arquivo;
         setSize(800, 600);
         salve_csv_to_db.setVisible(false);
         Converte_txt_to_csv.setVisible(false);
-         setExtendedState(MAXIMIZED_BOTH);
-         JL_Converter_txt.setVisible(false);
-         JL_Importar_CSV.setVisible(false);
-            JB_Importa_csv.setEnabled(false);
+        setExtendedState(MAXIMIZED_BOTH);
+        JL_Converter_txt.setVisible(false);
+        JL_Importar_CSV.setVisible(false);
+        JB_Importa_csv.setEnabled(false);
     }
 
     /**
@@ -104,73 +110,69 @@ public static   File arquivo;
         jScrollPane2.setBounds(10, 290, 1280, 210);
     }// </editor-fold>//GEN-END:initComponents
 
-     public  File seleciona_arquivo( java.awt.Component tela,String desc_tipo_arquivo, String extensao,JTextArea mensagem, String title) throws FileNotFoundException{
-      File arquivo = null;
     
     
-    
-           
-        selecionaarquivo  = new JFileChooser();
+    /**
+     Metodo utilizado para seleção dos arquivos utilizados pelo sistema 
+     * @param  tela, parente a qual será chamado 
+     * @param  desc_tipo_arquivo, descrição do tipo de arquivo a ser filtrado .
+     * @param extensao, extensão para ser filtrado o arquivo .
+     * @param mensagem, componente JTextArea que apresentará as informações do metodo.
+     * @param  title, titulo da janela de seleção de arquivo 
+     * @return arquivo - contendo as informações(nome, url) do arquivo selecionado em formato String .
+     * @throws FileNotFoundException
+     * 
+    */ 
+    public File seleciona_arquivo(java.awt.Component tela, String desc_tipo_arquivo, String extensao, JTextArea mensagem, String title) throws FileNotFoundException {
+        File arquivo = null;
+
+        selecionaarquivo = new JFileChooser();
         selecionaarquivo.setDialogTitle(title);
         FileFilter filter = new FileNameExtensionFilter(desc_tipo_arquivo, extensao);
-        selecionaarquivo.addChoosableFileFilter(filter);  
+        selecionaarquivo.addChoosableFileFilter(filter);
         selecionaarquivo.setAcceptAllFileFilterUsed(false);
-        
-        
-        
-        int returnVal = selecionaarquivo.showOpenDialog(tela);
-        if (returnVal == JFileChooser.APPROVE_OPTION){
-           
-          arquivo = selecionaarquivo.getSelectedFile();
-          System.out.println("abrindo: " + arquivo.getName());
-        
-          
-        }
- if(returnVal == JFileChooser.CANCEL_OPTION){
-            JOptionPane.showMessageDialog(tela, "Nenhum arquivo selecionado !");
-        
-        }
-       return arquivo;
-    }
-    
-    
-    
-    
-    private void JB_Converte_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Converte_txtActionPerformed
-     
-               Converte_txt_to_csv.setVisible(false);
-       
-    try {
-        //arquivo = null ;
-        // try {
-        arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this,"arquivo Texto", "txt",Converte_txt_to_csv,"Selecione o arquivo txt do SISOB !");
-    } catch (FileNotFoundException ex) {
-        Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-    }
-               // } catch (FileNotFoundException ex) {
-                //    Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
-               // }
-                TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
-                 TelaImportacaoSisobMensal.Converte_txt_to_csv.append("Convertendo arquivo para CSV .......... Aguarde ! \n"); 
-                Arquivo_txt_task txt = new Arquivo_txt_task();
-                txt.thread_format_text();
-           
 
-          
-      
-        
-    
-        
-        
+        int returnVal = selecionaarquivo.showOpenDialog(tela);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+            arquivo = selecionaarquivo.getSelectedFile();
+            System.out.println("abrindo: " + arquivo.getName());
+
+        }
+        if (returnVal == JFileChooser.CANCEL_OPTION) {
+            JOptionPane.showMessageDialog(tela, "Nenhum arquivo selecionado !");
+
+        }
+        return arquivo;
+    }
+
+
+    private void JB_Converte_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Converte_txtActionPerformed
+
+        Converte_txt_to_csv.setVisible(false);
+
+        try {
+
+            arquivo = seleciona_arquivo(TelaImportacaoSisobMensal.this, "arquivo Texto", "txt", Converte_txt_to_csv, "Selecione o arquivo txt do SISOB !");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
+        TelaImportacaoSisobMensal.Converte_txt_to_csv.append("Convertendo arquivo para CSV .......... Aguarde ! \n");
+        Arquivo_txt_task txt = new Arquivo_txt_task();
+        txt.thread_format_text();
+
+
     }//GEN-LAST:event_JB_Converte_txtActionPerformed
 
     private void JB_Importa_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_Importa_csvActionPerformed
         // TODO add your handling code here:
-       salve_csv_to_db.setVisible(false);
-        File arquivo = null ;
+        salve_csv_to_db.setVisible(false);
+        File arquivo = null;
         Arquivo_txt_task txt = new Arquivo_txt_task();
-                 txt.thread_salva_csv_db();
-   
+        txt.thread_salva_csv_db();
+
 
     }//GEN-LAST:event_JB_Importa_csvActionPerformed
 

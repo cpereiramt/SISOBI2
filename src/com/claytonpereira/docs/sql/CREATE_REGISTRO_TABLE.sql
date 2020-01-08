@@ -1,4 +1,6 @@
-
+/*
+Criação das tabelas do bd 
+*/
 CREATE DATABASE SISOB;
 
 DROP TABLE registrosSisob;

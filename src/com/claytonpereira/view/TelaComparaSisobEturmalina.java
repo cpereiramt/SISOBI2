@@ -31,15 +31,12 @@ import rst.pdfbox.layout.text.Constants;
  */
 public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaComparaSisobEturmalina
-     */
     public TelaComparaSisobEturmalina() {
- 
+
         initComponents();
-         setSize(800,600);
+        setSize(800, 600);
         setExtendedState(MAXIMIZED_BOTH);
-       
+
     }
 
     /**
@@ -128,76 +125,39 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            
+
             gerarPDF();
-            
-//
-//        System.out.print("O MES SELECIONADO FOI " + SPINNER_MES.getValue() + ""
-//                + " O ANO SELECIONADO FOI " + SPINNER_ANO.getValue() + "\n");
-//        DatabaseConnectionMysql db_connection = new DatabaseConnectionMysql();
-//        int mes_selected = (int) SPINNER_MES.getValue();
-//        int ano_selected = (int) SPINNER_ANO.getValue();
-//        try {
-//            ResultSet resultado =     db_connection.join_registro_sisob_eturmalina(mes_selected,ano_selected);
-//                
-//                int i = 1;
-//            while(resultado.next()){
-//
-//            System.out.print(resultado.getString(1) +  "  "
-//            + resultado.getString(2) +  "  "
-//                     + resultado.getInt(3) +  "  " 
-//                    + resultado.getInt(4) +  "  "  + "\n"
-//            
-//            );
-//           /** configurar o retorno rs para cada coluna da tabela como o 
-//           **  exemplo : (rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
-//           **  pois está dando o erro
-//           **  java.sql.SQLException: Invalid value for getInt() - 'MARIA IZAMI PEREIRA CAMPOS' 
-//             */
-//            i++;
-//    
-//    }
-//
-//        
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
         } catch (IOException ex) {
             Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(TelaComparaSisobEturmalina.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
-    
-     public void gerarPDF() throws IOException, SQLException{
-    
-         DatabaseConnectionMysql dados_retornados = new DatabaseConnectionMysql();
-         int mes = (int) SPINNER_MES.getValue();
-         int ano = (int) SPINNER_ANO.getValue();
-         ResultSet resultado = dados_retornados.join_registro_sisob_eturmalina(mes, ano);
-        
-     Document  document = new Document(Constants.A4, 40, 60, 40, 60);
-      while(resultado.next()){
-      Paragraph conteudo_sql = new Paragraph();
-      conteudo_sql.addText(resultado.getString(1) + "|| " + resultado.getString(2) + "|| " + 
-              resultado.getInt(3) + "|| " +  resultado.getInt(4) + "\n", 15, PDType1Font.COURIER );
-      
-        document.add(conteudo_sql);
-      
-      
-      }
-     
-        
- 
-         final OutputStream outputStream = 
-          new FileOutputStream("hellodoc.pdf");
-         document.save(outputStream); 
-     
-     
-     }
+    public void gerarPDF() throws IOException, SQLException {
+
+        DatabaseConnectionMysql dados_retornados = new DatabaseConnectionMysql();
+        int mes = (int) SPINNER_MES.getValue();
+        int ano = (int) SPINNER_ANO.getValue();
+        ResultSet resultado = dados_retornados.join_registro_sisob_eturmalina(mes, ano);
+
+        Document document = new Document(Constants.A4, 40, 60, 40, 60);
+        while (resultado.next()) {
+            Paragraph conteudo_sql = new Paragraph();
+            conteudo_sql.addText(resultado.getString(1) + "|| " + resultado.getString(2) + "|| "
+                    + resultado.getInt(3) + "|| " + resultado.getInt(4) + "\n", 15, PDType1Font.COURIER);
+
+            document.add(conteudo_sql);
+
+        }
+        final OutputStream outputStream
+                = new FileOutputStream("hellodoc.pdf");
+        document.save(outputStream);
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -205,7 +165,7 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

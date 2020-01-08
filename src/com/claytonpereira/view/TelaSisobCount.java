@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.claytonpereira.view;
 
 import com.claytonpereira.model.DatabaseConnectionMysql;
@@ -13,7 +8,7 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Tela criada para ser contado os registros do sistema sisob <br> que já foram importados, agrupando pelo nome do arquivo importado .
  * @author claytonpereira
  */
 public class TelaSisobCount extends javax.swing.JFrame {
@@ -22,60 +17,49 @@ public class TelaSisobCount extends javax.swing.JFrame {
      * Creates new form TelaSisobCount
      */
     public TelaSisobCount() {
-       
+
         initComponents();
-         setSize(800,600);
+        setSize(800, 600);
         setExtendedState(MAXIMIZED_BOTH);
-        
+
         setExtendedState(MAXIMIZED_BOTH);
-         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null}
-              
-            },
-            new String [] {
-                "   Nome Do Arquivo  ","  Numero de Registros por arquivo  "
-            }));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {null, null},
+                    {null, null}
+
+                },
+                new String[]{
+                    "   Nome Do Arquivo  ", "  Numero de Registros por arquivo  "
+                }));
     }
 
     
-    
-    public void carrega_registros(){
-    
-     DatabaseConnectionMysql conexao = new DatabaseConnectionMysql();
-         ResultSet resultado = conexao.count_registros_por_arquivo();
-         DefaultTableModel model =(DefaultTableModel) jTable1.getModel();
-         model.setNumRows(0);
- 
-     
- 
+    /**
+     Executa o metódo da consulta de regsitros agrupados por nome do arquivo <br> importado count_registros_por_arquivo() da classe 
+     *  DatabaseConnectionMysql 
+     */
+    public void carrega_registros() {
+        DatabaseConnectionMysql conexao = new DatabaseConnectionMysql();
+        ResultSet resultado = conexao.count_registros_por_arquivo();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setNumRows(0);
         try {
-            while(resultado.next())
-            { String result;
-                model.addRow(new Object[]
-                {
+            while (resultado.next()) {
+                  model.addRow(new Object[]{
                     //retorna os dados da tabela do BD, cada campo e um coluna.
-                   resultado.getString("Nome Do Arquivo"),
-                   resultado.getString("Numero de Registros por arquivo"),
-                    
-                     
-                    
-                  });
+                    resultado.getString("Nome Do Arquivo"),
+                    resultado.getString("Numero de Registros por arquivo"),});
                 model.fireTableDataChanged();
-          
-            }    
-                 
-                    
-                    // <editor-fold defaultstate="collapsed" desc="Generated Code">
-                } catch (SQLException ex) {
+
+            }
+            // <editor-fold defaultstate="collapsed" desc="Generated Code">
+        } catch (SQLException ex) {
             Logger.getLogger(TelaSisobCount.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }             
-                        
-                        
-                        
-                      
+    }
+
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -132,7 +116,7 @@ public class TelaSisobCount extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         carrega_registros();
+        carrega_registros();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -142,7 +126,7 @@ public class TelaSisobCount extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
