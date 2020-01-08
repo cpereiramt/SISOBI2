@@ -158,8 +158,8 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
             Logger.getLogger(TelaImportacaoSisobMensal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        TelaImportacaoSisobMensal.Converte_txt_to_csv.setVisible(true);
-        TelaImportacaoSisobMensal.Converte_txt_to_csv.append("Convertendo arquivo para CSV .......... Aguarde ! \n");
+      Converte_txt_to_csv.setVisible(true);
+        Converte_txt_to_csv.append("Convertendo arquivo para CSV .......... Aguarde ! \n");
         Arquivo_txt_task txt = new Arquivo_txt_task();
         txt.thread_format_text();
 
@@ -170,6 +170,8 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         // TODO add your handling code here:
         salve_csv_to_db.setVisible(false);
         File arquivo = null;
+       salve_csv_to_db.setVisible(true);
+        salve_csv_to_db.append("Salvando conteudo do arquivo CSV no Banco De Dados .......... Aguarde! " );
         Arquivo_txt_task txt = new Arquivo_txt_task();
         txt.thread_salva_csv_db();
 

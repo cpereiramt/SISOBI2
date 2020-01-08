@@ -8,6 +8,7 @@ package com.claytonpereira.model;
 import com.claytonpereira.view.TelaImportacaoSisobMensal;
 import static com.claytonpereira.view.TelaImportacaoSisobMensal.Converte_txt_to_csv;
 import static com.claytonpereira.view.TelaImportacaoSisobMensal.arquivo;
+import static com.claytonpereira.view.TelaImportacaoSisobMensal.salve_csv_to_db;
 import java.awt.TextArea;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -63,7 +64,7 @@ public class Arquivo_txt_task {
      */
     public void thread_format_text() {
 
-        SwingWorker<Void, String> work = new SwingWorker<Void, String>() {
+        SwingWorker<Void, String> work1 = new SwingWorker<Void, String>() {
             @Override
             protected Void doInBackground() throws Exception {
                 List<String> texto = format_txt_to_csv(arquivo);
@@ -78,7 +79,7 @@ public class Arquivo_txt_task {
 
             @Override
             protected void process(List<String> pairs) {
-                //TelaImportacaoSisobMensal.Converte_txt_to_csv.setText(" ");
+               
 
                 TelaImportacaoSisobMensal.JL_Converter_txt.setText("Convertendo arquivo: " + arquivo.getName());
 
@@ -97,11 +98,12 @@ public class Arquivo_txt_task {
 
             @Override
             protected void done() {
-
+                this.cancel(true);
                 thread_import_text();
+             
             }
         };
-        work.execute();
+        work1.execute();
 
     }
 
@@ -121,9 +123,11 @@ public class Arquivo_txt_task {
 
             @Override
             protected void done() {
+                  this.cancel(true);
                 if (escolheu_arquivo) {
                     JOptionPane.showMessageDialog(null, "arquivo convertido com sucesso !");
                     TelaImportacaoSisobMensal.JB_Importa_csv.setEnabled(true);
+                    
                 } else {
 
                     JOptionPane.showMessageDialog(null, "Erro na importação ou nenhum diretório selecionado \n para "
@@ -143,7 +147,7 @@ public class Arquivo_txt_task {
     */
     public void thread_salva_csv_db() {
 
-        SwingWorker<Void, String> work = new SwingWorker<Void, String>() {
+        SwingWorker<Void, String> work3 = new SwingWorker<Void, String>() {
             @Override
             protected Void doInBackground() throws Exception {
                 TelaImportacaoSisobMensal tela = new TelaImportacaoSisobMensal();
@@ -151,33 +155,31 @@ public class Arquivo_txt_task {
                 int i = 0;
                 while (i < texto.size()) {
                     publish(texto.get(i));
+                     i++;
                 }
                 return null;
             }
 
             @Override
             protected void process(List<String> pairs) {
-                TelaImportacaoSisobMensal.salve_csv_to_db.setVisible(true);
-
+              
+                    int i = 0;
                 for (String texto : pairs) {
-                    TelaImportacaoSisobMensal.salve_csv_to_db.setText("Teste de inserção ....");
-
+                TelaImportacaoSisobMensal.salve_csv_to_db.append("exportando linha " + i + "para o banco de dados .....");
+                i++;
                 }
 
             }
 
             @Override
             protected void done() {
-                try {
-                    this.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Arquivo_txt_task.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
+                 this.cancel(true);
                 JOptionPane.showMessageDialog(null, "arquivo salvo com sucesso no banco de dados  !");
             }
 
         };
-        work.execute();
+        work3.execute();
 
     }
     /**
