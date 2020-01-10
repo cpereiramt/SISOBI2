@@ -21,6 +21,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import rst.pdfbox.layout.elements.Document;
 import rst.pdfbox.layout.elements.Paragraph;
 import rst.pdfbox.layout.text.Constants;
@@ -144,16 +145,44 @@ public class TelaComparaSisobEturmalina extends javax.swing.JFrame {
         ResultSet resultado = dados_retornados.join_registro_sisob_eturmalina(mes, ano);
 
         Document document = new Document(Constants.A4, 40, 60, 40, 60);
-        while (resultado.next()) {
-            Paragraph conteudo_sql = new Paragraph();
-            conteudo_sql.addText(resultado.getString(1) + "|| " + resultado.getString(2) + "|| "
-                    + resultado.getInt(3) + "|| " + resultado.getInt(4) + "\n", 15, PDType1Font.COURIER);
-
-            document.add(conteudo_sql);
+        Paragraph texto = new Paragraph();
+        
+          texto.addText("===========================================================================\n", 11, PDType1Font.COURIER);  
+        texto.addText("||", 13, PDType1Font.COURIER_BOLD);
+         texto.addText("Nome", 12, PDType1Font.COURIER);
+         texto.addText("||", 13, PDType1Font.COURIER_BOLD);
+          texto.addText("CPF", 12, PDType1Font.COURIER);
+               texto.addText("||", 13, PDType1Font.COURIER_BOLD);
+           texto.addText("Mês De Falecimento", 12, PDType1Font.COURIER);
+                texto.addText("||", 13, PDType1Font.COURIER_BOLD);
+            texto.addText("Ano De Falecimento", 12, PDType1Font.COURIER);
+                 texto.addText("||\n", 13, PDType1Font.COURIER_BOLD);
+         texto.addText("===========================================================================\n", 11, PDType1Font.COURIER);
+        
+         Paragraph conteudo_sql = new Paragraph();
+         
+         while (resultado.next()) {
+             
+             conteudo_sql.addText("|| ", 13, PDType1Font.COURIER_BOLD);
+            conteudo_sql.addText( resultado.getString(1), 12, PDType1Font.COURIER);
+            conteudo_sql.addText("|| ", 13, PDType1Font.COURIER_BOLD);
+            
+              conteudo_sql.addText( resultado.getString(2), 12, PDType1Font.COURIER);
+            conteudo_sql.addText("|| ", 13, PDType1Font.COURIER_BOLD);  
+                conteudo_sql.addText( resultado.getString(3), 12, PDType1Font.COURIER);
+            conteudo_sql.addText("|| ", 13, PDType1Font.COURIER_BOLD);  
+                conteudo_sql.addText( resultado.getString(4), 12, PDType1Font.COURIER);
+           conteudo_sql.addText("|| \n", 13, PDType1Font.COURIER_BOLD);
+            conteudo_sql.addText("-----------------------------------------\n ", 20, PDType1Font.COURIER_BOLD);
+            
 
         }
+        document.add(texto);
+        document.add(conteudo_sql);
         final OutputStream outputStream
                 = new FileOutputStream("hellodoc.pdf");
+        JOptionPane.showMessageDialog(rootPane, "Arquivo Pdf gerado com sucesso"
+                + "");
         document.save(outputStream);
 
     }

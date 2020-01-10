@@ -209,9 +209,8 @@ public class Arquivo_txt_task {
                 String data_lavr_certidao_obito = strLine.substring(21, 29);
                 String benef_inss_n = strLine.substring(29, 39);
                 String nome_falecido = strLine.substring(39, 115);
-                // String nome_falecido_ajustado = nome_falecido.trim();
                 String nome_mae_falecido = strLine.substring(115, 147);
-                // String nome_mae_falecido_ajustado = nome_mae_falecido.trim();
+               
 
                 String data_Nascimento = strLine.substring(147, 155);
                 String data_Obito = strLine.substring(155, 163);
