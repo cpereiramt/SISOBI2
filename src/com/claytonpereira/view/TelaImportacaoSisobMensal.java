@@ -95,6 +95,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         getContentPane().add(JL_Importar_CSV);
         JL_Importar_CSV.setBounds(240, 260, 600, 20);
 
+        Converte_txt_to_csv.setEditable(false);
         Converte_txt_to_csv.setColumns(20);
         Converte_txt_to_csv.setRows(5);
         jScrollPane1.setViewportView(Converte_txt_to_csv);
@@ -102,6 +103,7 @@ public class TelaImportacaoSisobMensal extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(10, 50, 1280, 200);
 
+        salve_csv_to_db.setEditable(false);
         salve_csv_to_db.setColumns(20);
         salve_csv_to_db.setRows(5);
         jScrollPane2.setViewportView(salve_csv_to_db);

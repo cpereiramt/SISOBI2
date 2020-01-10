@@ -83,7 +83,7 @@ public class Arquivo_txt_task {
 
                 TelaImportacaoSisobMensal.JL_Converter_txt.setText("Convertendo arquivo: " + arquivo.getName());
 
-                linhas = 1;
+                
                 TelaImportacaoSisobMensal.JL_Converter_txt.setVisible(true);
                 for (String texto : pairs) {
 
@@ -162,10 +162,10 @@ public class Arquivo_txt_task {
 
             @Override
             protected void process(List<String> pairs) {
-              TelaImportacaoSisobMensal.salve_csv_to_db.setText("Salvando arquivo no Banco de dados ! \n ");
 
                     int i = 0;
                 for (String texto : pairs) {
+                    
                 TelaImportacaoSisobMensal.salve_csv_to_db.append("exportando linha " + texto + "para o banco de dados ..... \n");
                 i++;
                 }
